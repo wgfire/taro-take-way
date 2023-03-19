@@ -1,0 +1,24 @@
+:root,
+page {
+  height: 100%;
+  --nutui-menu-item-font-size: 26rpx;
+  --nutui-menu-item-content-max-height: 300rpx;
+  --nutui-tabs-vertical-titles-width: 134rpx;
+  --nutui-tabs-vertical-titles-item-height: 80rpx;
+
+  --nutui-inputnumber-icon-size: 24rpx;
+  --nutui-inputnumber-button-width: 40rpx;
+  --nutui-inputnumber-button-height: 40rpx;
+  --nutui-inputnumber-button-background-color: #fa2c19;
+  --nutui-inputnumber-input-background-color: #fff;
+  --nutui-inputnumber-input-margin: 0 5rpx;
+  --nutui-inputnumber-icon-color: #fff;
+  --nutui-inputnumber-icon-disabled-color: #fff;
+
+  --nutui-toast-text-font-size: 24rpx;
+}
+
+.nut-ellipsis-wordbreak {
+  color: #878585;
+  font-size: 26rpx;
+}
