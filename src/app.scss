@@ -5,20 +5,27 @@ page {
   --nutui-menu-item-content-max-height: 300rpx;
   --nutui-tabs-vertical-titles-width: 134rpx;
   --nutui-tabs-vertical-titles-item-height: 80rpx;
+  --nutui-tabs-titles-item-active-color: #151313;
 
   --nutui-inputnumber-icon-size: 24rpx;
-  --nutui-inputnumber-button-width: 40rpx;
-  --nutui-inputnumber-button-height: 40rpx;
-  --nutui-inputnumber-button-background-color: #fa2c19;
+  --nutui-inputnumber-button-width: 36rpx;
+  --nutui-inputnumber-button-height: 36rpx;
+  --nutui-inputnumber-button-background-color: rgb(249, 220, 74);
   --nutui-inputnumber-input-background-color: #fff;
   --nutui-inputnumber-input-margin: 0 5rpx;
-  --nutui-inputnumber-icon-color: #fff;
-  --nutui-inputnumber-icon-disabled-color: #fff;
+  --nutui-inputnumber-icon-color: black;
+  --nutui-inputnumber-icon-disabled-color: black;
 
   --nutui-toast-text-font-size: 24rpx;
+
+  --nutui-button-default-padding: 0 14rpx;
 }
 
 .nut-ellipsis-wordbreak {
   color: #878585;
   font-size: 26rpx;
+}
+
+.nut-icon {
+  color: black;
 }

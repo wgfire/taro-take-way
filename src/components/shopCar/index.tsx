@@ -59,7 +59,7 @@ export const ShopCar = (props: ShopCarProps) => {
               }}
               shape="square"
               type="primary"
-              color="linear-gradient(to right, #ff6034, #ee0a24)"
+              color="black"
               style={{ height: "100%", width: "200rpx" }}
             >
               去结算

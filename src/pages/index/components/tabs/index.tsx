@@ -32,7 +32,6 @@ export const NutTabs = (props: NutTabsProps) => {
         onChange={({ paneKey }) => {
           setTab6value(paneKey);
         }}
-        type="smile"
         titleScroll
         direction="vertical"
       >
@@ -60,6 +59,16 @@ export const NutTabs = (props: NutTabsProps) => {
                 }}
               ></Goods>
               <Goods
+                imgUrl="https://img.ehmall.com.cn/shop/store/goods/1/2021/05/24/1_06751818952682744.jpg?imageView2/3/w/1280/h/1280/q/85!"
+                onSelect={(value) => {
+                  console.log(value);
+                  const newTotal = Number(value.toFixed(2));
+                  setTotal(newTotal);
+                  props.onSelect?.(newTotal);
+                }}
+              ></Goods>
+              <Goods
+                imgUrl="https://www.penzai.com/uploads/img/202005/23/1590247997423469.jpg"
                 onSelect={(value) => {
                   console.log(value);
                   const newTotal = Number(value.toFixed(2));

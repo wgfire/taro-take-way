@@ -16,6 +16,7 @@ import styles from "./index.module.scss";
 
 export interface GoodsProps {
   onSelect: (price: number) => void;
+  imgUrl?: string;
 }
 export const Goods = (props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
@@ -24,13 +25,16 @@ export const Goods = (props: GoodsProps) => {
   return (
     <Row
       type="flex"
-      style={{ height: "200rpx", marginBottom: "24rpx", overflow: "hidden" }}
+      style={{ height: "200rpx", marginBottom: "30rpx", overflow: "hidden" }}
     >
       <Col span="8" style={{ alignSelf: "center" }}>
         <Avatar
-          style={{ width: "145rpx", height: "145rpx" }}
+          style={{ width: "135rpx", height: "135rpx" }}
           size="large"
-          icon="https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"
+          icon={
+            props.imgUrl ||
+            "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"
+          }
         />
       </Col>
       <Col span={16}>
@@ -65,6 +69,7 @@ export const Goods = (props: GoodsProps) => {
                   shape="square"
                   type="primary"
                   icon="plus"
+                  color="rgb(249, 220, 74)"
                   onClick={() => {
                     setAction("click");
                     props.onSelect(6.6);
