@@ -1,11 +1,10 @@
-import { Row, Col, Ellipsis, InputNumber, Button, Animate, Avatar, ConfigProvider, Cell } from "@nutui/nutui-react-taro";
+import { InputNumber, Button, Animate, Avatar, ConfigProvider } from "@nutui/nutui-react-taro";
 import { Flex } from "@src/lib/components/basic/Flex";
 
 import { View } from "@tarojs/components";
 import { useState } from "react";
 import styles from "./index.module.scss";
 import { Text } from "@src/lib/components/basic/Text";
-import { Item } from "@src/components/ListCard/Item";
 
 export interface GoodsProps {
   onSelect: (price: number) => void;
@@ -14,9 +13,9 @@ export interface GoodsProps {
 export const Goods = (props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
   const [action, setAction] = useState("click");
-  //   const
+
   return (
-    <Flex style={{ height: "200rpx", marginBottom: "30rpx", overflow: "hidden" }} alignItems="center">
+    <Flex style={{ height: "220rpx", overflow: "hidden" }} alignItems="center">
       <Avatar style={{ width: "135rpx", height: "135rpx" }} size="large" icon={props.imgUrl || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
 
       <Flex flexDirection="column" style={{ marginLeft: "20rpx", width: 0 }} flexGrow={1}>
@@ -24,16 +23,18 @@ export const Goods = (props: GoodsProps) => {
           这是一个橙汁这是一个橙汁这是一个橙汁这是一个橙汁
         </Text>
 
-        <Text className={styles.ellipse}>这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子</Text>
+        <Text className={styles.ellipse} color="lightGray#999999" size="24rpx">
+          这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子
+        </Text>
 
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="center" style={{ height: "52rpx" }}>
           <Text>$6.6</Text>
 
           <View>
-            {!expand && (
+            {!expand ? (
               <Animate type="slide-left" action={action}>
                 <Button
-                  style={{ padding: "0px 12rpx", height: "30rpx" }}
+                  style={{ padding: "0px 12rpx", height: "32rpx" }}
                   shape="square"
                   type="primary"
                   icon="plus"
@@ -46,20 +47,26 @@ export const Goods = (props: GoodsProps) => {
                   }}
                 ></Button>
               </Animate>
-            )}
-
-            {expand && (
+            ) : (
               <Animate type="slide-right" action="initial">
                 <ConfigProvider>
                   <InputNumber
+                    readonly
                     modelValue={1}
+                    onAdd={() => {
+                      props.onSelect(6.6);
+                    }}
+                    onReduce={() => {
+                      props.onSelect(-6.6);
+                    }}
                     onChangeFuc={(number: string | number) => {
                       console.log(number, "number");
-                      props.onSelect(6.6);
+                      // props.onSelect(6.6);
                     }}
                     overlimit={() => {
                       setAction("initial");
                       setExpand(false);
+                      props.onSelect(-6.6);
                     }}
                   />
                 </ConfigProvider>

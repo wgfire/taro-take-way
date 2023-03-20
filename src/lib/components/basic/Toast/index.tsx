@@ -9,8 +9,9 @@ export const NutToast = (props: NutToastProps) => {
     Object.assign(props.state, {
       msg: "加载中...",
       type: "loading",
-      cover: false,
+      cover: true,
       duration: 0,
+      coverColor: "rgba(0,0,0,0.1)",
       closeOnClickOverlay: false,
       icon: "",
       center: true,

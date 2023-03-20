@@ -69,7 +69,7 @@ export const ScrollContent: React.FC<ScrollContentProps> = React.memo(props => {
 
   return (
     <Flex flexGrow={1} id={state.id}>
-      <ScrollView {...restProps} style={{ ...style, height: state.height }} onScrollToLower={handleOnScrollToLower}>
+      <ScrollView {...restProps} style={{ ...style, height: state.height }} onScrollToLower={handleOnScrollToLower} enhanced showScrollbar={false}>
         {children}
         {loadMore && enableLoadMore && (shouldLoadMore(loadMore) ? <NutToast state={{ type: "loading" }} /> : <Text size="24rpx" color="lightGray#999999"></Text>)}
       </ScrollView>
