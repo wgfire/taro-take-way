@@ -1,0 +1,25 @@
+// /**
+//  * Custom Theme
+//  * 以750px设计稿为基准
+//  */
+
+page {
+  //   --nutui-tabs-titles-background-color: #e6e0e0;
+  --nutui-tabs-vertical-tab-line-color: rgb(247, 165, 58);
+  --nutui-tabs-titles-item-active-color: rgba(18, 20, 20, 0.568);
+  --nutui-tabs-titles-item-color: rgba(5, 7, 7, 0.568);
+
+  --nutui-inputnumber-icon-size: 24rpx;
+  --nutui-inputnumber-button-width: 32rpx;
+  --nutui-inputnumber-button-height: 32rpx;
+  --nutui-inputnumber-button-background-color: rgb(249, 220, 74);
+  --nutui-inputnumber-input-background-color: #fff;
+  --nutui-inputnumber-input-margin: 0 5rpx;
+  --nutui-inputnumber-icon-color: black;
+  --nutui-inputnumber-icon-disabled-color: black;
+}
+
+.nut-ellipsis-wordbreak {
+  color: #878585;
+  font-size: 26rpx;
+}

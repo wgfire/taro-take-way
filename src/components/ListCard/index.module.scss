@@ -1,0 +1,34 @@
+.listCard {
+  background-color: #ffffff;
+  padding: 32rpx 32rpx 0;
+  .title {
+    line-height: 1.3;
+  }
+  .header {
+    overflow: hidden;
+  }
+  .content {
+    margin-bottom: 32rpx;
+    & > view + view,
+    & > text + text {
+      margin-top: 26rpx;
+    }
+  }
+  .footer {
+    border-top: 1rpx solid #eaeaea;
+    padding: 16rpx 0;
+    .icon {
+      width: 50rpx;
+      height: 50rpx;
+      margin-right: 16rpx;
+
+      image {
+        border: none;
+      }
+    }
+  }
+  :global(._high) {
+    // TODO: 后续scss定义 red
+    color: #e63c2d;
+  }
+}

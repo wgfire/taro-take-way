@@ -1,0 +1,23 @@
+.tabs {
+  // overflow: hidden;
+}
+.header {
+  background-color: white;
+}
+.hide {
+  display: none;
+}
+.activeTab {
+  position: relative;
+  &::after {
+    content: "";
+    width: 40rpx;
+    height: 4rpx;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0068ff;
+    border-radius: 3rpx 3rpx 3rpx 3rpx;
+  }
+}

@@ -1,0 +1,47 @@
+.tag {
+  display: inline-flex;
+  line-height: 1;
+  // em 用于 height 的情况下，相对于当前元素的字体大小计算
+  height: 1.6em;
+  // em 用于 padding 的情况下，相对于当前元素的字体大小计算
+  padding: 0 0.5em;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6rpx;
+  overflow: hidden;
+  box-sizing: border-box;
+  white-space: nowrap;
+  box-sizing: border-box;
+  vertical-align: middle;
+  &.red {
+    color: #ff4c4c;
+  }
+  &.stroke {
+    border: 2rpx solid currentColor;
+  }
+  .fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: currentColor;
+    opacity: 0.1;
+  }
+  &.large {
+    font-size: 28rpx;
+  }
+  &.small {
+    font-size: 22rpx;
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      // em 用于 padding 的情况下，相对于当前元素的字体大小计算
+      margin-right: 0.2em;
+    }
+  }
+}

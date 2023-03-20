@@ -1,7 +1,12 @@
+import { PageView } from "@src/lib/components/layout/PageView";
 import { View } from "@tarojs/components";
 
 const My = () => {
-  return <View>我的</View>;
+  return (
+    <PageView tabBarPlaceholder>
+      <View>我的</View>
+    </PageView>
+  );
 };
 
 export default My;

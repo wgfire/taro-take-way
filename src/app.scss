@@ -1,31 +1,10 @@
-:root,
-page {
-  height: 100%;
-  --nutui-menu-item-font-size: 26rpx;
-  --nutui-menu-item-content-max-height: 300rpx;
-  --nutui-tabs-vertical-titles-width: 134rpx;
-  --nutui-tabs-vertical-titles-item-height: 80rpx;
-  --nutui-tabs-titles-item-active-color: #151313;
+// 组件覆盖样式
+@import "./assets/style/component-global.scss";
 
-  --nutui-inputnumber-icon-size: 24rpx;
-  --nutui-inputnumber-button-width: 36rpx;
-  --nutui-inputnumber-button-height: 36rpx;
-  --nutui-inputnumber-button-background-color: rgb(249, 220, 74);
-  --nutui-inputnumber-input-background-color: #fff;
-  --nutui-inputnumber-input-margin: 0 5rpx;
-  --nutui-inputnumber-icon-color: black;
-  --nutui-inputnumber-icon-disabled-color: black;
+// 字体图标
+@import "./assets/fonts/font.css"; // TODO: 移到 Icon 组件中
 
-  --nutui-toast-text-font-size: 24rpx;
+// 定制主题色
+@import "~@assets/style/variables.scss";
 
-  --nutui-button-default-padding: 0 14rpx;
-}
 
-.nut-ellipsis-wordbreak {
-  color: #878585;
-  font-size: 26rpx;
-}
-
-.nut-icon {
-  color: black;
-}

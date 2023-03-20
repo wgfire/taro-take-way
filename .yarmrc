@@ -1,0 +1,8 @@
+registry "https://registry.npmmirror.com"
+sass_binary_site "https://registry.npmmirror.com/mirrors/node-sass/"
+sharp_binary_site "https://registry.npmmirror.com/mirrors/sharp/"
+sharp_libvips_binary_host "https://registry.npmmirror.com/mirrors/sharp-libvips"
+@yunke:registry "https://registry-npm.myscrm.cn/repository/yunke/"
+@mypaas:registry "https://nexus.mypaas.com.cn/repository/app-npm/"
+@aistore:registry "https://registry-npm.myscrm.cn/repository/yunke/"
+@ultron:registry "https://registry-npm.myscrm.cn/repository/yunke/"

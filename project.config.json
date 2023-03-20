@@ -1,31 +1,58 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "TakeWay",
-  "description": "TakeWay",
-  "appid": "wx10faba6f93d2bc5a",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "enhance": false,
-    "compileHotReLoad": false,
-    "postcss": false,
-    "minified": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    }
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.30.2",
-  "srcMiniprogramRoot": "dist/",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
-  "condition": {},
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
-  }
+    "miniprogramRoot": "dist/",
+    "projectname": "marketing-frontend",
+    "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+    "appid": "wxe1411ed2a0cff9aa",
+    "setting": {
+        "urlCheck": true,
+        "es6": false,
+        "enhance": false,
+        "postcss": false,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": false,
+        "coverView": true,
+        "nodeModules": false,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": true,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "useMultiFrameRuntime": true,
+        "useApiHook": true,
+        "useApiHostProcess": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "enableEngineNative": false,
+        "useIsolateContext": true,
+        "useCompilerModule": true,
+        "userConfirmedUseCompilerModuleSwitch": false,
+        "userConfirmedBundleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true
+    },
+    "compileType": "miniprogram",
+    "libVersion": "2.27.1",
+    "srcMiniprogramRoot": "dist/",
+    "packOptions": {
+        "ignore": [
+            {
+                "value": "**/*.{png|jeg|jpeg|svg}",
+                "type": "glob"
+            }
+        ],
+        "include": []
+    },
+    "editorSetting": {
+        "tabIndent": "insertSpaces",
+        "tabSize": 4
+    },
+    "condition": {}
 }

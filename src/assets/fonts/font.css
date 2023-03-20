@@ -1,0 +1,204 @@
+@font-face {
+    font-family: ai-icon;
+    src: url("ai-icon.eot");src: url("ai-icon.eot?61545af9#iefix") format("embedded-opentype"),
+             url("ai-icon.woff2?61545af9") format("woff2"),
+             url("ai-icon.woff?61545af9") format("woff"),
+             url("ai-icon.ttf?61545af9") format("truetype"),
+             url("ai-icon.svg?61545af9#ai-icon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="ai-icon"], [class*=" ai-icon"] {
+    font-family: 'ai-icon' !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+    vertical-align: middle;
+}
+
+
+.ai-icon-address::before {
+    content: "\ea01";
+}
+
+.ai-icon-agreement::before {
+    content: "\ea02";
+}
+
+.ai-icon-back::before {
+    content: "\ea03";
+}
+
+.ai-icon-card::before {
+    content: "\ea04";
+}
+
+.ai-icon-check-circle-fill::before {
+    content: "\ea05";
+}
+
+.ai-icon-check-fill::before {
+    content: "\ea06";
+}
+
+.ai-icon-checked::before {
+    content: "\ea07";
+}
+
+.ai-icon-circle::before {
+    content: "\ea08";
+}
+
+.ai-icon-clock::before {
+    content: "\ea09";
+}
+
+.ai-icon-close::before {
+    content: "\ea0a";
+}
+
+.ai-icon-down-fill::before {
+    content: "\ea0b";
+}
+
+.ai-icon-down-stroke::before {
+    content: "\ea0c";
+}
+
+.ai-icon-edit::before {
+    content: "\ea0d";
+}
+
+.ai-icon-email::before {
+    content: "\ea0e";
+}
+
+.ai-icon-flag::before {
+    content: "\ea0f";
+}
+
+.ai-icon-home::before {
+    content: "\ea10";
+}
+
+.ai-icon-money::before {
+    content: "\ea11";
+}
+
+.ai-icon-nut::before {
+    content: "\ea12";
+}
+
+.ai-icon-plus::before {
+    content: "\ea13";
+}
+
+.ai-icon-record-strong::before {
+    content: "\ea14";
+}
+
+.ai-icon-resource::before {
+    content: "\ea15";
+}
+
+.ai-icon-right::before {
+    content: "\ea16";
+}
+
+.ai-icon-search::before {
+    content: "\ea17";
+}
+
+.ai-icon-telephone-fill::before {
+    content: "\ea18";
+}
+
+.ai-icon-telephone-stroke-calling::before {
+    content: "\ea19";
+}
+
+.ai-icon-telephone-stroke::before {
+    content: "\ea1a";
+}
+
+.ai-icon-trash::before {
+    content: "\ea1b";
+}
+
+.ai-icon-type::before {
+    content: "\ea1c";
+}
+
+.ai-icon-up-fill::before {
+    content: "\ea1d";
+}
+
+.ai-icon-write::before {
+    content: "\ea1e";
+}
+
+.ai-icon-caigouxuqiu::before {
+    content: "\ea1f";
+}
+
+.ai-icon-duiwaitouzi::before {
+    content: "\ea20";
+}
+
+.ai-icon-falvsusong::before {
+    content: "\ea21";
+}
+
+.ai-icon-gongshangxinxi::before {
+    content: "\ea22";
+}
+
+.ai-icon-lianxinxi::before {
+    content: "\ea23";
+}
+
+.ai-icon-qiyezizhi::before {
+    content: "\ea24";
+}
+
+.ai-icon-record-stroke::before {
+    content: "\ea25";
+}
+
+.ai-icon-shixinbeizhixing::before {
+    content: "\ea26";
+}
+
+.ai-icon-shuishouweifa::before {
+    content: "\ea27";
+}
+
+.ai-icon-xiangmuhezuo::before {
+    content: "\ea28";
+}
+
+.ai-icon-xiangmukaigong::before {
+    content: "\ea29";
+}
+
+.ai-icon-xiangmukaipan::before {
+    content: "\ea2a";
+}
+
+.ai-icon-xiansuo::before {
+    content: "\ea2b";
+}
+
+.ai-icon-zhaogongyingshang::before {
+    content: "\ea2c";
+}
+
+.ai-icon-login-phone::before {
+    content: "\ea2d";
+}
+
+.ai-icon-login-wechat::before {
+    content: "\ea2e";
+}
+

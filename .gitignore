@@ -4,4 +4,7 @@ deploy_versions/
 .rn_temp/
 node_modules/
 .DS_Store
-.swc
+node_modules
+.vscode
+_app
+_node_modules/

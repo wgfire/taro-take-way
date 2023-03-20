@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./",
-  "projectname": "TakeWay",
+  "projectname": "take-way",
   "appid": "testAppId",
   "setting": {
     "es6": false,

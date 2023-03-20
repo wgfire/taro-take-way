@@ -1,0 +1,64 @@
+
+
+.phone {
+  position: relative;
+
+  &.large {
+    width: 30rpx;
+    height: 30rpx;
+  }
+
+  &.small {
+    width: 22rpx;
+    height: 22rpx;
+  }
+
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: url(./phone.svg) center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.phoneSound {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-size: auto;
+
+  -webkit-animation: phone 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: phone 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+
+  &:nth-child(1) {
+    background-image: url(./phone-1.svg);
+    transform: scale(0.5);
+  }
+
+  &:nth-child(2) {
+    background-image: url(./phone-2.svg);
+    transform: scale(0.5) translate(30%, -30%);
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    background-image: url(./phone-3.svg);
+    transform: scale(0.5) translate(60%, -60%);
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes phone {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,165 @@
+.flex {
+  display: flex;
+}
+.inlineFlex {
+  display: inline-flex;
+}
+
+.flexDirectionColumn {
+  flex-direction: column;
+}
+.flexDirectionColumnReverse {
+  flex-direction: column-reverse;
+}
+.flexDirectionRow {
+  flex-direction: row;
+}
+.flexDirectionRowReverse {
+  flex-direction: row-reverse;
+}
+
+.justifyContentSpaceAround {
+  justify-content: space-around;
+}
+.justifyContentSpaceBetween {
+  justify-content: space-between;
+}
+.justifyContentSpaceEvenly {
+  justify-content: space-evenly;
+}
+.justifyContentStretch {
+  justify-content: stretch;
+}
+.justifyContentCenter {
+  justify-content: center;
+}
+.justifyContentEnd {
+  justify-content: end;
+}
+.justifyContentFlexStart {
+  justify-content: flex-start;
+}
+.justifyContentFlexEnd {
+  justify-content: flex-end;
+}
+.justifyContentStart {
+  justify-content: start;
+}
+.justifyContentLeft {
+  justify-content: left;
+}
+.justifyContentRight {
+  justify-content: right;
+}
+.justifyContentNormal {
+  justify-content: normal;
+}
+
+.alignItemsCenter {
+  align-items: center;
+}
+.alignItemsStart {
+  align-items: start;
+}
+.alignItemsEnd {
+  align-items: end;
+}
+.alignItemsFlexEnd {
+  align-items: flex-end;
+}
+.alignItemsFlexStart {
+  align-items: flex-start;
+}
+.alignItemsBaseline {
+  align-items: baseline;
+}
+.alignItemsStretch {
+  align-items: stretch;
+}
+.alignItemsNormal {
+  align-items: normal;
+}
+.alignItemsSelfEnd {
+  align-items: self-end;
+}
+.alignItemsSelfStart {
+  align-items: self-start;
+}
+
+.alignContentSpaceAround {
+  align-content: space-around;
+}
+.alignContentSpaceBetween {
+  align-content: space-between;
+}
+.alignContentSpaceEvenly {
+  align-content: space-evenly;
+}
+.alignContentStretch {
+  align-content: stretch;
+}
+.alignContentCenter {
+  align-content: center;
+}
+.alignContentEnd {
+  align-content: end;
+}
+.alignContentFlexEnd {
+  align-content: flex-end;
+}
+.alignContentFlexStart {
+  align-content: flex-start;
+}
+.alignContentStart {
+  align-content: start;
+}
+.alignContentBaseline {
+  align-content: baseline;
+}
+.alignContentNormal {
+  align-content: normal;
+}
+
+.flexWrapNowrap {
+  flex-wrap: nowrap;
+}
+.flexWrapWrap {
+  flex-wrap: wrap;
+}
+.flexWrapWrapReverse {
+  flex-wrap: wrap-reverse;
+}
+
+.alignSelfStretch {
+  align-self: stretch;
+}
+.alignSelfCenter {
+  align-self: center;
+}
+.alignSelfEnd {
+  align-self: end;
+}
+.alignSelfFlexEnd {
+  align-self: flex-end;
+}
+.alignSelfFlexStart {
+  align-self: flex-start;
+}
+.alignSelfStart {
+  align-self: start;
+}
+.alignSelfNormal {
+  align-self: normal;
+}
+.alignSelfBaseline {
+  align-self: baseline;
+}
+.alignSelfAuto {
+  align-self: auto;
+}
+.alignSelfSelfEnd {
+  align-self: self-end;
+}
+.alignSelfSelfStart {
+  align-self: self-start;
+}

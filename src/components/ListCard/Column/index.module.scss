@@ -1,0 +1,21 @@
+.column {
+  padding-top: 10rpx;
+}
+
+.item {
+  position: relative;
+  & + &::before {
+    content: "";
+    position: absolute;
+    width: 2rpx;
+    height: 22rpx;
+    background-color: #eaeaea;
+    left: -1rpx;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.label {
+  margin-bottom: 4rpx;
+}

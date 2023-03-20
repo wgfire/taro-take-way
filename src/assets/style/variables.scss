@@ -1,0 +1,15 @@
+/*
+  本文件提供给页面scss文件引用使用，方便使用变量和mixin，如：
+
+  // ./xxx.scss
+  @import '~@assets/style/variables.scss';
+  .demo {
+    color: $color-brand;
+  }
+*/
+
+/* 自定义 */
+@import "./custom-theme.scss";
+@import "./utils-mixin.scss";
+
+

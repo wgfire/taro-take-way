@@ -1,0 +1,39 @@
+.htmlView {
+  .h5-p {
+    margin: 0 0 0.8em 0;
+  }
+
+  // 相比display: table，使用flex，可解决 跨栏问题
+  .table,
+  .h5-table {
+    width: 100%;
+    border-top: 1px solid #aaa !important;
+    border-left: 1px solid #aaa !important;
+    border-right: none !important;
+    border-bottom: none !important;
+
+    .tr,
+    .h5-tr {
+      display: flex;
+      width: auto !important;
+      height: auto !important;
+    }
+
+    .td,
+    .h5-td {
+      display: flex;
+      width: 100%;
+      border-top: none !important;
+      border-left: none !important;
+      border-right: 1px solid #aaa !important;
+      border-bottom: 1px solid #aaa !important;
+      padding: 5px !important;
+      word-break: break-all;
+    }
+
+    .p,
+    .h5-p {
+      margin: 0 !important;
+    }
+  }
+}

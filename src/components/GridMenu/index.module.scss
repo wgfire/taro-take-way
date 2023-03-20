@@ -1,0 +1,22 @@
+.gridMenu {
+  background-color: #ffffff;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  padding: 32rpx;
+  border-bottom: 1rpx solid #eaeaea;
+}
+
+.row {
+  border-bottom: 1rpx solid #eaeaea;
+  padding: 32rpx 0;
+}
+
+.col {
+  height: 95rpx;
+}
+
+.col:not(:last-child):not(:empty) {
+  border-right: 1rpx solid #eaeaea;
+}
