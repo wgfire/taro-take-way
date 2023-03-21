@@ -4,10 +4,50 @@ import { useEffect, useState } from "react";
 
 import { NutMenu } from "./components/menu";
 import { NutTabs } from "./components/tabs";
+import { GoodsData, GoodsItemProps } from "./model";
 
+interface SelectGoodsProps extends GoodsItemProps {
+  num: number;
+}
 const Index = () => {
   const [total, setTotal] = useState(0);
   const [expand, setExpand] = useState(false);
+  const [selectGood, setSelectGood] = useState<Array<SelectGoodsProps>>([]);
+
+  const goods = [
+    {
+      id: "1",
+      price: 6.6,
+    },
+    {
+      id: "2",
+      price: 7.6,
+    },
+    {
+      id: "3",
+      price: 8.6,
+    },
+  ];
+  const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
+    const newData = [...selectGood];
+    const index = selectGood.findIndex(el => item.id === el.id);
+    const data = newData[index];
+    const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
+    if (data) {
+      select.num = type === "add" ? select.num + 1 : select.num - 1;
+      newData[index] = select;
+    } else {
+      newData.push(select);
+    }
+    setSelectGood(newData.filter(selectItem => selectItem.num > 0));
+  };
+  useEffect(() => {
+    console.log(selectGood, "选择的商品");
+    const newTotal = selectGood.reduce((per, curr) => {
+      return Number((per + curr.price * curr.num).toFixed(2));
+    }, 0);
+    setTotal(newTotal);
+  }, [selectGood]);
   useEffect(() => {
     console.log(total);
     setExpand(total !== 0);
@@ -17,9 +57,10 @@ const Index = () => {
       <PageView.Content>
         <NutMenu></NutMenu>
         <NutTabs
+          goods={goods}
           total={total}
-          onSelect={value => {
-            setTotal(value);
+          onSelect={(value, type) => {
+            selectGoodsHandel(value, type);
           }}
         ></NutTabs>
         <ShopCar price={total} expand={expand}></ShopCar>

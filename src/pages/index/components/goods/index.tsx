@@ -5,10 +5,12 @@ import { View } from "@tarojs/components";
 import { useState } from "react";
 import styles from "./index.module.scss";
 import { Text } from "@src/lib/components/basic/Text";
+import { GoodsItemProps } from "../../model";
 
 export interface GoodsProps {
-  onSelect: (price: number) => void;
+  onSelect: (type: string) => void;
   imgUrl?: string;
+  data: GoodsItemProps;
 }
 export const Goods = (props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
@@ -28,7 +30,7 @@ export const Goods = (props: GoodsProps) => {
         </Text>
 
         <Flex justifyContent="space-between" alignItems="center" style={{ height: "52rpx" }}>
-          <Text>$6.6</Text>
+          <Text>{props.data.price}</Text>
 
           <View>
             {!expand ? (
@@ -42,7 +44,7 @@ export const Goods = (props: GoodsProps) => {
                   color="rgb(249, 220, 74)"
                   onClick={() => {
                     setAction("click");
-                    props.onSelect(6.6);
+                    props.onSelect("add");
                     setExpand(true);
                   }}
                 ></Button>
@@ -54,10 +56,10 @@ export const Goods = (props: GoodsProps) => {
                     readonly
                     modelValue={1}
                     onAdd={() => {
-                      props.onSelect(6.6);
+                      props.onSelect("add");
                     }}
                     onReduce={() => {
-                      props.onSelect(-6.6);
+                      props.onSelect("reduce");
                     }}
                     onChangeFuc={(number: string | number) => {
                       console.log(number, "number");
@@ -66,7 +68,7 @@ export const Goods = (props: GoodsProps) => {
                     overlimit={() => {
                       setAction("initial");
                       setExpand(false);
-                      props.onSelect(-6.6);
+                      props.onSelect("reduce");
                     }}
                   />
                 </ConfigProvider>

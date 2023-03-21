@@ -1,17 +1,20 @@
 import { Tabs } from "@nutui/nutui-react-taro";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { PageView } from "@src/lib/components/layout/PageView";
+import { View } from "@tarojs/components";
 import { useState } from "react";
+import { GoodsData, GoodsItemProps } from "../../model";
 import { Goods } from "../goods";
 
 export interface NutTabsProps {
-  onSelect(value: number): void;
+  onSelect(item: GoodsItemProps, type: string): void;
   total: number;
+  goods: GoodsData;
 }
 export const NutTabs = (props: NutTabsProps) => {
   const [tabvalue, setTabvalue] = useState("0");
   // const [total, onSelect] = useState(0);
-  const { total, onSelect } = props;
+  const { total, onSelect, goods } = props;
   const list = [
     {
       text: "水果",
@@ -26,9 +29,10 @@ export const NutTabs = (props: NutTabsProps) => {
       value: "2",
     },
   ];
+
   return (
     <Tabs
-      style={{ height: "calc(100% - 102rpx)", marginTop: "6rpx" }}
+      style={{ height: "calc(100% - 102rpx)", marginTop: "0rpx" }}
       value={tabvalue}
       ellipsis
       onChange={({ paneKey }) => {
@@ -51,30 +55,18 @@ export const NutTabs = (props: NutTabsProps) => {
                 },
               }}
             >
-              <Goods
-                onSelect={value => {
-                  const newTotal = Number(Number(total + value).toFixed(2));
-                  onSelect(newTotal);
-                }}
-              ></Goods>
-              <Goods
-                onSelect={value => {
-                  const newTotal = Number(Number(total + value).toFixed(2));
-                  onSelect(newTotal);
-                }}
-              ></Goods>
-              <Goods
-                onSelect={value => {
-                  const newTotal = Number(Number(total + value).toFixed(2));
-                  onSelect(newTotal);
-                }}
-              ></Goods>
-              <Goods
-                onSelect={value => {
-                  const newTotal = Number(Number(total + value).toFixed(2));
-                  onSelect(newTotal);
-                }}
-              ></Goods>
+              {goods.map(goodsItem => {
+                return (
+                  <Goods
+                    key={goodsItem.id}
+                    data={goodsItem}
+                    onSelect={type => {
+                      // const newTotal = Number(Number(total + value).toFixed(2));
+                      onSelect(goodsItem, type);
+                    }}
+                  ></Goods>
+                );
+              })}
             </PageView.ScrollContent>
           </Flex>
         </Tabs.TabPane>
