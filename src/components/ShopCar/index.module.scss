@@ -1,9 +1,9 @@
 .shopCarWarpper {
   position: absolute;
-  bottom: 0px;
   width: 100%;
   height: 120rpx;
   background: white;
+  bottom: 0;
 }
 .shopCar {
   display: flex;
@@ -11,4 +11,8 @@
   align-items: center;
   height: 100%;
   padding-left: 20rpx;
+}
+.tabBarSafe {
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
 }

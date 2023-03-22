@@ -1,5 +1,5 @@
 export default {
-  pages: ["pages/index/index", "pages/my/index"],
+  pages: ["pages/index/index", "pages/my/index", "pages/order/index"] as const,
   tabBar: {
     custom: true,
     list: [
