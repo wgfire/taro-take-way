@@ -1,14 +1,14 @@
 import { ShopCar } from "@src/components/ShopCar";
 import { PageView } from "@src/lib/components/layout/PageView";
+import { Navigation } from "@src/utils/Navigation";
+import { eventCenter } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 
 import { NutMenu } from "./components/menu";
 import { NutTabs } from "./components/tabs";
-import { GoodsData, GoodsItemProps } from "./model";
+import { GoodsData, GoodsItemProps, SelectGoodsProps } from "./model";
+import { calculateTatal } from "./utils";
 
-interface SelectGoodsProps extends GoodsItemProps {
-  num: number;
-}
 const Index = () => {
   const [total, setTotal] = useState(0);
   const [expand, setExpand] = useState(false);
@@ -43,9 +43,7 @@ const Index = () => {
   };
   useEffect(() => {
     console.log(selectGood, "选择的商品");
-    const newTotal = selectGood.reduce((per, curr) => {
-      return Number((per + curr.price * curr.num).toFixed(2));
-    }, 0);
+    const newTotal = calculateTatal(selectGood);
     setTotal(newTotal);
   }, [selectGood]);
   useEffect(() => {
@@ -63,7 +61,13 @@ const Index = () => {
             selectGoodsHandel(value, type);
           }}
         ></NutTabs>
-        <ShopCar price={total} expand={expand}></ShopCar>
+        <ShopCar
+          price={total}
+          expand={expand}
+          onClick={() => {
+            Navigation.navigateTo("/pages/order/index");
+          }}
+        ></ShopCar>
       </PageView.Content>
     </PageView>
   );

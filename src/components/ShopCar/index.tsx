@@ -4,18 +4,19 @@ import { Text } from "@src/lib/components/basic/Text";
 import styles from "./index.module.scss";
 import { Navigation } from "@src/utils/Navigation";
 import classNames from "classnames";
+import { RouteUtil } from "@src/utils/RouteUtil";
 
 export interface ShopCarProps {
   price: number;
   expand: boolean;
-  isTabBar?: boolean;
+  onClick?: () => void;
 }
 export const ShopCar = (props: ShopCarProps) => {
-  const { expand, isTabBar = true } = props;
+  const { expand } = props;
 
   console.log(props.price, "current");
   return expand ? (
-    <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !isTabBar ? styles.tabBarSafe : "")}>
+    <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !RouteUtil.isTabRoute() ? styles.tabBarSafe : "")}>
       <View className={styles.shopCar}>
         <View style={{ display: "flex", alignItems: "center" }}>
           <Icon name="cart" size={30}></Icon>
@@ -27,7 +28,7 @@ export const ShopCar = (props: ShopCarProps) => {
         <Button
           size="large"
           onClick={() => {
-            Navigation.navigateTo("/pages/order/index");
+            props.onClick?.();
           }}
           shape="square"
           type="primary"

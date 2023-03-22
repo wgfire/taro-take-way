@@ -6,5 +6,7 @@ export interface GoodsItemProps {
 }
 
 export type GoodsData = Array<GoodsItemProps>;
-
+export interface SelectGoodsProps extends GoodsItemProps {
+  num: number;
+}
 // const model = createModel()
