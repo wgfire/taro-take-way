@@ -9,4 +9,18 @@ export type GoodsData = Array<GoodsItemProps>;
 export interface SelectGoodsProps extends GoodsItemProps {
   num: number;
 }
-// const model = createModel()
+
+export interface IndexState {
+  total: number;
+  selectGoods: Array<SelectGoodsProps>;
+  expand: boolean;
+}
+
+export const defaultState: IndexState = {
+  total: 0,
+  selectGoods: [],
+  expand: false,
+};
+const { useModel, useHydrateState, atom } = createModel<IndexState>(defaultState);
+
+export { useModel, useHydrateState, atom };

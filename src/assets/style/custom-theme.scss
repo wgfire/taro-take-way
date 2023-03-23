@@ -9,14 +9,17 @@ page {
   --nutui-tabs-titles-item-active-color: rgba(18, 20, 20, 0.568);
   --nutui-tabs-titles-item-color: rgba(5, 7, 7, 0.568);
 
-  --nutui-inputnumber-icon-size: 24rpx;
-  --nutui-inputnumber-button-width: 34rpx;
-  --nutui-inputnumber-button-height: 34rpx;
+  --nutui-inputnumber-icon-size: 25rpx;
+  --nutui-inputnumber-button-width: 36rpx;
+  --nutui-inputnumber-button-height: 36rpx;
   --nutui-inputnumber-button-background-color: rgb(249, 220, 74);
   --nutui-inputnumber-input-background-color: #fff;
   --nutui-inputnumber-input-margin: 0 5rpx;
   --nutui-inputnumber-icon-color: black;
   --nutui-inputnumber-icon-disabled-color: black;
+  --nutui-button-default-border-color: transparent;
+  --nutui-radio-label-font-active-color: rgb(249, 220, 74);
+  --nutui-brand-color: rgb(249, 220, 74);
 }
 
 .nut-ellipsis-wordbreak {

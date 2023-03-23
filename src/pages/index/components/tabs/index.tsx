@@ -32,7 +32,7 @@ export const NutTabs = (props: NutTabsProps) => {
 
   return (
     <Tabs
-      style={{ height: "calc(100% - 102rpx)", marginTop: "0rpx" }}
+      style={{ height: "calc(100% - 100rpx)", marginTop: "0rpx" }}
       value={tabvalue}
       ellipsis
       onChange={({ paneKey }) => {

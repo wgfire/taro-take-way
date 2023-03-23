@@ -1,19 +1,15 @@
 import { ShopCar } from "@src/components/ShopCar";
 import { PageView } from "@src/lib/components/layout/PageView";
 import { Navigation } from "@src/utils/Navigation";
-import { eventCenter } from "@tarojs/taro";
-import { useEffect, useState } from "react";
-
 import { NutMenu } from "./components/menu";
 import { NutTabs } from "./components/tabs";
-import { GoodsData, GoodsItemProps, SelectGoodsProps } from "./model";
-import { calculateTatal } from "./utils";
+import { GoodsItemProps, SelectGoodsProps } from "./model";
+import { usePresenter } from "./presenter";
+import { calculateTotal } from "./utils";
 
 const Index = () => {
-  const [total, setTotal] = useState(0);
-  const [expand, setExpand] = useState(false);
-  const [selectGood, setSelectGood] = useState<Array<SelectGoodsProps>>([]);
-
+  const { model } = usePresenter();
+  const { total, expand, selectGoods } = model.state;
   const goods = [
     {
       id: "1",
@@ -29,8 +25,8 @@ const Index = () => {
     },
   ];
   const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
-    const newData = [...selectGood];
-    const index = selectGood.findIndex(el => item.id === el.id);
+    const newData = [...selectGoods];
+    const index = selectGoods.findIndex(el => item.id === el.id);
     const data = newData[index];
     const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
     if (data) {
@@ -39,17 +35,15 @@ const Index = () => {
     } else {
       newData.push(select);
     }
-    setSelectGood(newData.filter(selectItem => selectItem.num > 0));
+    const newSelectGoods = newData.filter(selectItem => selectItem.num > 0);
+    const newTotal = calculateTotal(newSelectGoods);
+    model.setState({
+      total: newTotal,
+      expand: newTotal !== 0,
+      selectGoods: newSelectGoods,
+    });
   };
-  useEffect(() => {
-    console.log(selectGood, "选择的商品");
-    const newTotal = calculateTatal(selectGood);
-    setTotal(newTotal);
-  }, [selectGood]);
-  useEffect(() => {
-    console.log(total);
-    setExpand(total !== 0);
-  }, [total]);
+
   return (
     <PageView tabBarPlaceholder loading={false}>
       <PageView.Content>

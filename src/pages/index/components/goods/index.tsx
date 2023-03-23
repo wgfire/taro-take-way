@@ -18,10 +18,10 @@ export const Goods = (props: GoodsProps) => {
 
   return (
     <Flex style={{ height: "220rpx", overflow: "hidden" }} alignItems="center">
-      <Avatar style={{ width: "135rpx", height: "135rpx" }} size="large" icon={props.imgUrl || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
+      <Avatar style={{ width: "125rpx", height: "125rpx" }} size="large" icon={props.imgUrl || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
 
       <Flex flexDirection="column" style={{ marginLeft: "20rpx", width: 0 }} flexGrow={1}>
-        <Text size="26rpx" style={{ marginBottom: "13rpx" }} ellipsis>
+        <Text size="26rpx" style={{ marginBottom: "12rpx" }} ellipsis>
           这是一个橙汁这是一个橙汁这是一个橙汁这是一个橙汁
         </Text>
 
@@ -40,7 +40,7 @@ export const Goods = (props: GoodsProps) => {
                   shape="square"
                   type="primary"
                   icon="plus"
-                  size="small"
+                  size="normal"
                   color="rgb(249, 220, 74)"
                   onClick={() => {
                     setAction("click");
@@ -63,7 +63,6 @@ export const Goods = (props: GoodsProps) => {
                     }}
                     onChangeFuc={(number: string | number) => {
                       console.log(number, "number");
-                      // props.onSelect(6.6);
                     }}
                     overlimit={() => {
                       setAction("initial");
