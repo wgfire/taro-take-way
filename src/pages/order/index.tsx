@@ -4,8 +4,9 @@ import { Flex } from "@src/lib/components/basic/Flex";
 
 import { PageView } from "@src/lib/components/layout/PageView";
 import { useDidMount } from "@src/lib/hooks/lifecycle";
+import { Navigation } from "@src/utils/Navigation";
 import { View } from "@tarojs/components";
-import Taro from "@tarojs/taro";
+import Taro, { eventCenter } from "@tarojs/taro";
 
 import { usePresenter as useIndexPresenter } from "../index/presenter";
 import { calculateTotal } from "../index/utils";
@@ -19,22 +20,38 @@ const Order = () => {
 
   useDidMount(() => {
     console.log(indexModel.state.selectGoods, "选择的商品");
+    eventCenter.on("selectAddress", data => {
+      model.setState({
+        address: data,
+      });
+    });
   });
   const pay = () => {
-    if (!model.state.address)
-      return Taro.showModal({
+    if (!model.state.address) {
+      Taro.showModal({
         title: "提示",
         content: "请选择收货地址",
       });
-    return Taro.showToast({
-      title: "订单支付成功",
-      icon: "success",
-    });
+    } else {
+      Taro.showToast({
+        title: "订单支付成功",
+        icon: "success",
+        duration: 2000,
+      }).then(() => {
+        setTimeout(() => {
+          model.resetState();
+          Navigation.reLaunch({
+            url: "/pages/index/index",
+          });
+        }, 1000);
+      });
+    }
   };
+
   return (
     <PageView tabBarPlaceholder loading={false} backgroundColor="lightGray">
       <PageView.Content style={{ marginBottom: "70rpx" }}>
-        <Cell title={model.state.address || "请选择收货地址"} isLink />
+        <Cell title={model.state.address || "请选择收货地址"} isLink to="/pages/address/index" />
         <Divider styles={{ color: "#9E9E9E", borderColor: "#9E9E9E", height: "36rpx", padding: "0px 12rpx", marginBottom: "30rpx" }} direction="vertical">
           商品列表
         </Divider>

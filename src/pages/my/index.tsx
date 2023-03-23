@@ -39,7 +39,7 @@ const PageIndex = () => {
 
         <View className={styles.panel}>
           <Flex flexDirection="column">
-            <Flex className={styles.panelItem} alignItems="center" onClick={() => Navigation.navigateTo("/pages/address/index")}>
+            <Flex className={styles.panelItem} alignItems="center" onClick={() => Navigation.navigateTo("/pages/address/index", { link: "editAddress" })}>
               <Image src={require("@assets/images/my/icon-bookmark.svg")} />
               <Flex flexGrow={1}>
                 <Text size="32rpx">地址管理</Text>
