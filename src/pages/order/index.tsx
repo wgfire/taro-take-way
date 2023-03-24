@@ -39,7 +39,7 @@ const Order = () => {
         duration: 2000,
       }).then(() => {
         setTimeout(() => {
-          model.resetState();
+          indexModel.resetState();
           Navigation.reLaunch({
             url: "/pages/index/index",
           });

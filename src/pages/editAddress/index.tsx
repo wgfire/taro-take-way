@@ -4,16 +4,17 @@ import { Flex } from "@src/lib/components/basic/Flex";
 import { Text } from "@src/lib/components/basic/Text";
 import { PageView } from "@src/lib/components/layout/PageView";
 import { Navigation } from "@src/utils/Navigation";
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { useState } from "react";
 import { usePresenter } from "../address/presenter";
 import styles from "./index.module.scss";
 
 const EditAddress = () => {
+  const { params } = useRouter();
   const { model } = usePresenter();
-  const [text, setText] = useState("请选择地址");
-  const [phone, setPhone] = useState(0);
-  const [name, setName] = useState();
+  const [text, setText] = useState(params.content ? decodeURIComponent(params.content) : "请选择地址");
+  const [phone, setPhone] = useState(params.tel ?? "");
+  const [name, setName] = useState(params.name ? decodeURIComponent(params.name) : "");
   const [normal, setNormal] = useState(false);
   const [province, setProvince] = useState([
     { id: 1, name: "北京", title: "B" },
@@ -86,17 +87,29 @@ const EditAddress = () => {
         content: "请填写所有必填项",
       });
     } else {
-      model.setState({
-        address: [
-          ...model.state.address,
-          {
-            tel: phone,
-            content: text,
-            default: false,
+      const newAddress = [...model.state.address];
+      if (params.tel) {
+        const index = newAddress.findIndex(el => el.tel === params.tel);
+        if (index > -1) {
+          newAddress[index] = {
+            tel: params.tel,
             name,
-          },
-        ],
+            content: text,
+            default: params.default === "1",
+          };
+        }
+      } else {
+        newAddress.push({
+          tel: phone,
+          content: text,
+          default: false,
+          name,
+        });
+      }
+      model.setState({
+        address: newAddress,
       });
+
       Navigation.navigateTo("/pages/address/index");
     }
   };
@@ -109,7 +122,8 @@ const EditAddress = () => {
             linkSlot={
               <Input
                 placeholder="请输入姓名"
-                style={{ padding: "12rpx 0rpx", width: "130rpx" }}
+                defaultValue={name}
+                style={{ padding: "12rpx 0rpx", width: "138rpx" }}
                 onChange={value => {
                   setName(value);
                 }}
@@ -120,17 +134,20 @@ const EditAddress = () => {
         <Flex>
           <Cell
             title="电话"
+            desc={phone || ""}
             linkSlot={
-              <Button
-                openType="getPhoneNumber"
-                style={{ padding: "0rpx" }}
-                size="small"
-                onGetPhoneNumber={e => {
-                  // debugger;
-                }}
-              >
-                <Text color="lightGray#999999">点击授权获取</Text>
-              </Button>
+              !phone && (
+                <Button
+                  openType="getPhoneNumber"
+                  style={{ padding: "0rpx" }}
+                  size="small"
+                  onGetPhoneNumber={e => {
+                    // debugger;
+                  }}
+                >
+                  <Text color="lightGray#999999">点击授权获取</Text>
+                </Button>
+              )
             }
           />
         </Flex>

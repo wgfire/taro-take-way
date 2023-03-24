@@ -1,4 +1,5 @@
-import { Button, Cell, Checkbox, Radio } from "@nutui/nutui-react-taro";
+import { Button, Cell, Checkbox, Icon } from "@nutui/nutui-react-taro";
+import { Flex } from "@src/lib/components/basic/Flex";
 
 import { PageView } from "@src/lib/components/layout/PageView";
 import { StringUtil } from "@src/lib/utils/StringUtil";
@@ -29,7 +30,8 @@ export const Address = () => {
                 // Navigation.navigateTo(`/pages/${params.link ?? "order"}/index` as RoutePath);
               }}
               linkSlot={
-                <View
+                <Flex
+                  alignItems="center"
                   onClick={e => {
                     e.stopPropagation();
                   }}
@@ -51,7 +53,20 @@ export const Address = () => {
                   >
                     {el.default ? "默认地址" : "设为默认"}
                   </Checkbox>
-                </View>
+                  <Icon
+                    name="edit"
+                    size={12}
+                    style={{ marginLeft: "30rpx" }}
+                    onClick={e => {
+                      Navigation.navigateTo("/pages/editAddress/index", {
+                        tel: el.tel,
+                        name: el.name,
+                        content: el.content,
+                        default: el.default ? "1" : "0",
+                      });
+                    }}
+                  ></Icon>
+                </Flex>
               }
             />
           );
