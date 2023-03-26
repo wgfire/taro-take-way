@@ -4,6 +4,11 @@ interface APIBodyFilterConditionItem {
   value?: string | number;
   category?: string;
 }
+interface ResponseBody<T> {
+  code: number;
+  message: string;
+  data: T;
+}
 
 interface APIBodyFilterItem {
   type: string;

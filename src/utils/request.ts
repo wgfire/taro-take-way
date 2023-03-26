@@ -7,7 +7,7 @@ import { MessageException, ServerErrorException } from "./exception";
 export interface ResponseData<T> {
   /** 值为 false 代表请求出现异常 */
   success: boolean;
-  error_code: number;
+  code: number;
   message: string;
   // FIXME: 后端遗留问题
   data:
@@ -38,18 +38,25 @@ const headerInterceptor = (chain: Taro.Chain) => {
 const exceptionInterceptor = (chain: Taro.Chain) => {
   return chain.proceed(chain.requestParams).then((response: Taro.request.SuccessCallbackResult<ResponseData<unknown>>) => {
     const { data, statusCode } = response;
-    const { success, error_code, message } = data;
+    const { success, code, message } = data;
 
     // TODO: 根据网络未连接时的信息，更新条件语句
     // if ("网络断开") {
     // 	throw new NetworkException();
     // }
+
     if (statusCode >= 400 && statusCode < 600) {
       throw new ServerErrorException(chain.requestParams.url, chain.requestParams.data, statusCode, response.errMsg);
     }
     if (statusCode >= 200 && statusCode < 300) {
       if (success === false) {
-        throw new MessageException(error_code, message);
+        throw new MessageException(code, message);
+      } else if (code !== 1000) {
+        Taro.showToast({
+          title: message,
+          icon: "error",
+        });
+        throw new Error(message);
       }
     }
     return response;
@@ -101,10 +108,6 @@ export const request = async <Res = any, Data extends string | TaroGeneral.IAnyO
   // const result = await preflight().then(() => Taro.request<ResponseData<Res>>(option));
   const result = await Taro.request<ResponseData<Res>>(option);
 
-  // FIXME: 后端遗留问题
-  if (result.data.data !== null && typeof result.data.data === "object" && "result" in result.data.data) {
-    return result.data.data.result;
-  }
   /** 提取业务数据 */
   return result.data.data;
 };

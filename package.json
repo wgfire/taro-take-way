@@ -17,7 +17,8 @@
     "build": "node script/build.js",
     "wx:upload": "node script/wx/inquiry",
     "check": "ts-node script/check.ts",
-    "icon": "ts-node script/icon/index.ts"
+    "icon": "ts-node script/icon/index.ts",
+    "build:weapp": "taro build --type weapp"
   },
   "browserslist": [
     "last 3 versions",

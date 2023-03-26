@@ -8,3 +8,4 @@ node_modules
 .vscode
 _app
 _node_modules/
+dist.zip

@@ -12,8 +12,20 @@
   align-items: center;
   height: 100%;
   padding-left: 20rpx;
+  position: relative;
 }
 .tabBarSafe {
   bottom: constant(safe-area-inset-bottom);
   bottom: env(safe-area-inset-bottom);
+}
+.carboxWapper {
+  position: absolute;
+  bottom: 120rpx;
+  width: 100%;
+}
+.carboxContent {
+  background: white;
+  width: 100%;
+  padding: 12rpx;
+  box-sizing: border-box;
 }

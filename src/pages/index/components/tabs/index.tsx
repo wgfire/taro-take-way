@@ -4,6 +4,7 @@ import { PageView } from "@src/lib/components/layout/PageView";
 import { View } from "@tarojs/components";
 import { useState } from "react";
 import { GoodsData, GoodsItemProps } from "../../model";
+import { usePresenter } from "../../presenter";
 import { Goods } from "../goods";
 
 export interface NutTabsProps {
@@ -13,6 +14,7 @@ export interface NutTabsProps {
 }
 export const NutTabs = (props: NutTabsProps) => {
   const [tabvalue, setTabvalue] = useState("0");
+  const {model} = usePresenter()
   // const [total, onSelect] = useState(0);
   const { total, onSelect, goods } = props;
   const list = [
@@ -35,6 +37,7 @@ export const NutTabs = (props: NutTabsProps) => {
       style={{ height: "calc(100% - 100rpx)", marginTop: "0rpx" }}
       value={tabvalue}
       ellipsis
+      type="smile"
       onChange={({ paneKey }) => {
         setTabvalue(paneKey);
       }}

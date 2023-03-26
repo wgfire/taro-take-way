@@ -4,6 +4,7 @@ import { Flex } from "@src/lib/components/basic/Flex";
 import { Text } from "@src/lib/components/basic/Text";
 import { PageView } from "@src/lib/components/layout/PageView";
 import { Navigation } from "@src/utils/Navigation";
+import { View } from "@tarojs/components";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useState } from "react";
 import { usePresenter } from "../address/presenter";
@@ -15,71 +16,7 @@ const EditAddress = () => {
   const [text, setText] = useState(params.content ? decodeURIComponent(params.content) : "请选择地址");
   const [phone, setPhone] = useState(params.tel ?? "");
   const [name, setName] = useState(params.name ? decodeURIComponent(params.name) : "");
-  const [normal, setNormal] = useState(false);
-  const [province, setProvince] = useState([
-    { id: 1, name: "北京", title: "B" },
-    { id: 2, name: "广西", title: "G" },
-    { id: 3, name: "江西", title: "J" },
-    { id: 4, name: "四川", title: "S" },
-    { id: 5, name: "浙江", title: "Z" },
-  ]);
 
-  const [city, setCity] = useState([
-    { id: 7, name: "朝阳区", title: "C" },
-    { id: 8, name: "崇文区", title: "C" },
-    { id: 9, name: "昌平区", title: "C" },
-    { id: 6, name: "石景山区", title: "S" },
-    { id: 3, name: "八里庄街道", title: "B" },
-    { id: 10, name: "北苑", title: "B" },
-  ]);
-
-  const [country, setCountry] = useState([
-    { id: 3, name: "八里庄街道", title: "B" },
-    { id: 9, name: "北苑", title: "B" },
-    { id: 4, name: "常营乡", title: "C" },
-  ]);
-  const [town, setTown] = useState([]);
-
-  const [address, setAddress] = useState({
-    province,
-    city,
-    country,
-    town,
-  });
-  const onChange = cal => {
-    const name = address[cal.next];
-    setTimeout(() => {
-      switch (cal.next) {
-        case "city":
-          setCity([
-            { id: 7, name: "朝阳区", title: "C" },
-            { id: 8, name: "崇文区", title: "C" },
-            { id: 9, name: "昌平区", title: "C" },
-            { id: 6, name: "石景山区", title: "S" },
-            { id: 3, name: "八里庄街道", title: "B" },
-            { id: 10, name: "北苑", title: "B" },
-          ]);
-          break;
-        case "country":
-          setCountry([
-            { id: 3, name: "八里庄街道", title: "B" },
-            { id: 9, name: "北苑", title: "B" },
-            { id: 4, name: "常营乡", title: "C" },
-          ]);
-          break;
-        default:
-          setNormal(false);
-      }
-    }, 200);
-  };
-  const close = val => {
-    console.log(val);
-    setNormal(false);
-
-    if (val.data.addressStr) {
-      setText(val.data.addressStr);
-    }
-  };
   const save = () => {
     if (!text || !name) {
       Taro.showModal({
@@ -116,45 +53,45 @@ const EditAddress = () => {
   return (
     <PageView>
       <PageView.Content flexGrow={1}>
-        <Flex>
-          <Cell
-            title="姓名"
-            linkSlot={
-              <Input
-                placeholder="请输入姓名"
-                defaultValue={name}
-                style={{ padding: "12rpx 0rpx", width: "138rpx" }}
-                onChange={value => {
-                  setName(value);
+        <FormItem required label="姓名" direction="column">
+          <Input
+            placeholder="请输入姓名"
+            defaultValue={name}
+            style={{ padding: "12rpx 0rpx" }}
+            onChange={value => {
+              setName(value);
+            }}
+          ></Input>
+        </FormItem>
+
+        <FormItem required label="电话号" direction="column">
+          {!phone ? (
+            <View>
+              <Button
+                openType="getPhoneNumber"
+                style={{ padding: "0rpx", width: "190rpx" }}
+                size="small"
+                onGetPhoneNumber={e => {
+                  // debugger;
+                  console.log(e, "回调");
                 }}
-              ></Input>
-            }
-          />
-        </Flex>
-        <Flex>
-          <Cell
-            title="电话"
-            desc={phone || ""}
-            linkSlot={
-              !phone && (
-                <Button
-                  openType="getPhoneNumber"
-                  style={{ padding: "0rpx" }}
-                  size="small"
-                  onGetPhoneNumber={e => {
-                    // debugger;
-                  }}
-                >
-                  <Text color="lightGray#999999">点击授权获取</Text>
-                </Button>
-              )
-            }
-          />
-        </Flex>
-        <Flex>
-          <Cell title="选择地址" desc={text} onClick={() => setNormal(true)} />
-          <Address modelValue={normal} province={province} city={city} country={country} customAddressTitle="请选择所在地区" onChange={onChange} onClose={close} />
-        </Flex>
+              >
+                <Text color="lightGray#999999">点击授权获取</Text>
+              </Button>
+            </View>
+          ) : (
+            <Text>{phone}</Text>
+          )}
+        </FormItem>
+        <FormItem required label="地址信息" direction="column">
+          <Input
+            style={{ padding: "12rpx 0rpx" }}
+            placeholder="输入地址"
+            onChange={value => {
+              setText(value);
+            }}
+          ></Input>
+        </FormItem>
       </PageView.Content>
       <Button color="rgb(249, 220, 74)" size="normal" className={styles.btn} icon="plus" onClick={() => save()}>
         保存

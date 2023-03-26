@@ -2,9 +2,11 @@ import { Icon, Animate, Button, AnimatingNumbers } from "@nutui/nutui-react-taro
 import { View } from "@tarojs/components";
 import { Text } from "@src/lib/components/basic/Text";
 import styles from "./index.module.scss";
-import { Navigation } from "@src/utils/Navigation";
+
 import classNames from "classnames";
 import { RouteUtil } from "@src/utils/RouteUtil";
+import { CarBox } from "./CarBox";
+import { useState } from "react";
 
 export interface ShopCarProps {
   price: number;
@@ -13,12 +15,13 @@ export interface ShopCarProps {
 }
 export const ShopCar = (props: ShopCarProps) => {
   const { expand } = props;
+  const [showCarBox, setShowCarBox] = useState(false);
 
   console.log(props.price, "current");
   return expand ? (
     <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !RouteUtil.isTabRoute() ? styles.tabBarSafe : "")}>
       <View className={styles.shopCar}>
-        <View style={{ display: "flex", alignItems: "center" }}>
+        <View style={{ display: "flex", alignItems: "center" }} onClick={() => setShowCarBox(!showCarBox)}>
           <Icon name="cart" size={30}></Icon>
           <Text size="36rpx" style={{ marginLeft: "12rpx" }}>
             ￥
@@ -38,6 +41,8 @@ export const ShopCar = (props: ShopCarProps) => {
           <Text color="white">去结算</Text>
         </Button>
       </View>
+
+      {showCarBox && <CarBox></CarBox>}
     </Animate>
   ) : null;
 };

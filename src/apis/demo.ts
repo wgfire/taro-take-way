@@ -1,5 +1,5 @@
 interface Response<T> {
-  error_code: number;
+  code: number;
   message: string;
   data: T;
 }
@@ -8,7 +8,7 @@ function mock<T>(data: T): Promise<Response<T>> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({
-        error_code: 0,
+        code: 0,
         message: "",
         data,
       });

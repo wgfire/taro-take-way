@@ -37,6 +37,7 @@
     "projectname": "take-way",
     "setting": {
         "compileHotReLoad": true,
-        "bigPackageSizeSupport": true
+        "bigPackageSizeSupport": true,
+        "urlCheck": false
     }
 }
