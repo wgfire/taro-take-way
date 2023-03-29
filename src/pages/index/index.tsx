@@ -6,10 +6,12 @@ import { NutTabs } from "./components/tabs";
 import { GoodsItemProps, SelectGoodsProps } from "./model";
 import { usePresenter } from "./presenter";
 import { calculateTotal } from "./utils";
+import { usePresenter as userPresenter } from "@src/moduels/user/usePresenter";
 
 const Index = () => {
   const { model } = usePresenter();
-  const { total, expand, selectGoods } = model.state;
+  const { model: userModel } = userPresenter();
+  const { total, expand, selectGoods,loading } = model.state;
   const goods = [
     {
       id: "1",
@@ -45,24 +47,26 @@ const Index = () => {
   };
 
   return (
-    <PageView tabBarPlaceholder loading={false}>
-      <PageView.Content>
-        <NutMenu></NutMenu>
-        <NutTabs
-          goods={goods}
-          total={total}
-          onSelect={(value, type) => {
-            selectGoodsHandel(value, type);
-          }}
-        ></NutTabs>
-        <ShopCar
-          price={total}
-          expand={expand}
-          onClick={() => {
-            Navigation.navigateTo("/pages/order/index");
-          }}
-        ></ShopCar>
-      </PageView.Content>
+    <PageView tabBarPlaceholder loading={!userModel.state.token || loading }>
+      {userModel.state.token && (
+        <PageView.Content>
+          <NutMenu></NutMenu>
+          <NutTabs
+            goods={goods}
+            total={total}
+            onSelect={(value, type) => {
+              selectGoodsHandel(value, type);
+            }}
+          ></NutTabs>
+          <ShopCar
+            price={total}
+            expand={expand}
+            onClick={() => {
+              Navigation.navigateTo("/pages/order/index");
+            }}
+          ></ShopCar>
+        </PageView.Content>
+      )}
     </PageView>
   );
 };

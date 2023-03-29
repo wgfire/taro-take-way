@@ -12,10 +12,7 @@ export interface ResponseData<T> {
   // FIXME: 后端遗留问题
   data:
     | T // 登录接口没有 result
-    | {
-        // 建模接口有 result
-        result: T;
-      };
+    
 }
 
 const domainInterceptor = (chain: Taro.Chain) => {
@@ -29,7 +26,7 @@ const headerInterceptor = (chain: Taro.Chain) => {
   const token = storageUtil.get("token");
   requestParams.header = {
     ...requestParams.header,
-    Authorization: `bearer ${token}`,
+    Authorization: `${token}`,
   };
   return chain.proceed(requestParams);
 };
@@ -109,5 +106,5 @@ export const request = async <Res = any, Data extends string | TaroGeneral.IAnyO
   const result = await Taro.request<ResponseData<Res>>(option);
 
   /** 提取业务数据 */
-  return result.data.data;
+  return result.data;
 };

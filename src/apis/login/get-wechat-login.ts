@@ -8,7 +8,7 @@ export interface GetWechatLoginParams {
   code: string;
 }
 export const getWechatLogin = (params: GetWechatLoginParams) => {
-  return request<ResponseBody<any>>({
+  return request<string>({
     url: "/api/wechat/login",
     method: "POST",
     data: params,

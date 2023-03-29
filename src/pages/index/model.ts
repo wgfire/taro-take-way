@@ -1,3 +1,4 @@
+import { GetResidentialListResult } from "@src/apis/residential/get-residential-list";
 import { createModel } from "@src/utils/mvp";
 
 export interface GoodsItemProps {
@@ -14,12 +15,14 @@ export interface IndexState {
   total: number;
   selectGoods: Array<SelectGoodsProps>;
   expand: boolean;
+  loading: boolean;
 }
 
 export const defaultState: IndexState = {
   total: 0,
   selectGoods: [],
   expand: false,
+  loading: false,
 };
 const { useModel, useHydrateState, atom } = createModel<IndexState>(defaultState);
 

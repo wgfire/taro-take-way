@@ -1,17 +1,39 @@
 import { Menu, MenuItem } from "@nutui/nutui-react-taro";
+import { getResidentialList } from "@src/apis/residential/get-residential-list";
+import { useDidMount } from "@src/lib/hooks/lifecycle";
 import { useState } from "react";
 
 export interface NutMenuProps {}
 export const NutMenu = () => {
-  const [options] = useState([
-    { text: "全部地区", value: 0 },
-    { text: "北京", value: 1 },
-    { text: "上海", value: 2 },
-  ]);
+  const [residentialList, setResidentialList] = useState([{ text: "全部地区", value: 0 }]);
+  const getResidentialListData = async () => {
+    const { data } = await getResidentialList();
+    setResidentialList(() => {
+      return data.map(item => {
+        return {
+          text: item.name,
+          value: item.id,
+        };
+      });
+    });
+  };
+  const onChangeHandel = (value: any) => {
+    console.log(value, "改变");
+  };
+  useDidMount(() => {
+    getResidentialListData();
+  });
+
   return (
     <div className="demo full">
       <Menu activeColor="black">
-        <MenuItem options={options} value={0} />
+        <MenuItem
+          options={residentialList}
+          value={residentialList[0].value}
+          onChange={value => {
+            onChangeHandel(value);
+          }}
+        />
       </Menu>
     </div>
   );

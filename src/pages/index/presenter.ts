@@ -1,8 +1,15 @@
+import { getResidentialList } from "@src/apis/residential/get-residential-list";
 import { GoodsItemProps, SelectGoodsProps, useModel } from "./model";
 import { calculateTotal } from "./utils";
 
 export const usePresenter = () => {
   const model = useModel();
+
+  const getResidentialListData = async () => {
+    const { data } = await getResidentialList();
+    console.log(data, "地区");
+  };
+
   const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
     const newData = [...model.state.selectGoods];
     const index = model.state.selectGoods.findIndex(el => item.id === el.id);
@@ -22,5 +29,5 @@ export const usePresenter = () => {
       selectGoods: newSelectGoods,
     });
   };
-  return { model,selectGoodsHandel };
+  return { model, selectGoodsHandel };
 };

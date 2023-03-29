@@ -1,24 +1,21 @@
 import { PropsWithChildren, useEffect } from "react";
-import Taro, { useDidShow, useDidHide, useLaunch } from "@tarojs/taro";
+import { useDidShow, useDidHide, useLaunch } from "@tarojs/taro";
 import { checkUpdate } from "./utils/checkUpdate";
 import { createExceptionCollector } from "./utils/exception/collector";
 import { exceptionHandler } from "./exceptionHandler";
 
 import "./app.scss";
-import { getWechatLogin } from "./apis/login/get-wechat-login";
+
+import { usePresenter } from "./moduels/user/usePresenter";
 
 // import { preflight } from "./utils/request";
 
 createExceptionCollector(exceptionHandler);
 
 function App(props: PropsWithChildren) {
+  const { autoLogin } = usePresenter();
   useLaunch(() => {
-    Taro.login({
-      success: res => {
-        console.log(res, "loginCode");
-        getWechatLogin({ code: res.code });
-      },
-    });
+    autoLogin();
   });
 
   useEffect(() => {
