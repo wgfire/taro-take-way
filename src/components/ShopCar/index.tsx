@@ -16,8 +16,6 @@ export interface ShopCarProps {
 export const ShopCar = (props: ShopCarProps) => {
   const { expand } = props;
   const [showCarBox, setShowCarBox] = useState(false);
-
-  console.log(props.price, "current");
   return expand ? (
     <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !RouteUtil.isTabRoute() ? styles.tabBarSafe : "")}>
       <View className={styles.shopCar}>

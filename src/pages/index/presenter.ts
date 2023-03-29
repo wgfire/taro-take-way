@@ -1,6 +1,6 @@
-import { getMenuGoodsList } from "@src/apis/goods/get-goods-list";
+import { getMenuGoodsList, GoodsItemProps } from "@src/apis/goods/get-goods-list";
 import { bindResidentialList } from "@src/apis/residential/bind-residential";
-import { GoodsItemProps, SelectGoodsProps, useModel } from "./model";
+import { SelectGoodsProps, useModel } from "./model";
 import { calculateTotal } from "./utils";
 
 export const usePresenter = () => {

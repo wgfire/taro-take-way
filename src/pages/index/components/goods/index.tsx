@@ -2,7 +2,7 @@ import { InputNumber, Button, Animate, Avatar, ConfigProvider } from "@nutui/nut
 import { Flex } from "@src/lib/components/basic/Flex";
 
 import { View } from "@tarojs/components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import { Text } from "@src/lib/components/basic/Text";
 
@@ -11,17 +11,18 @@ import { GoodsItemProps } from "@src/apis/goods/get-goods-list";
 
 export interface GoodsProps {
   onSelect: (type: string) => void;
-  imgUrl?: string;
   data: GoodsItemProps;
 }
 export const Goods = (props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
+
   const [action, setAction] = useState("click");
   const [num, setNum] = useState(1);
   const { model } = usePresenter();
   const { selectGoods } = model.state;
   useEffect(() => {
     const isSelect = selectGoods.find(item => item.menuId === props.data.menuId);
+    console.log(isSelect, "isselect");
     if (isSelect) {
       setNum(isSelect.num);
     } else {
@@ -29,6 +30,9 @@ export const Goods = (props: GoodsProps) => {
       setExpand(false);
     }
   }, [props.data.menuId, selectGoods]);
+  useEffect(() => {
+    console.log("展开", expand);
+  }, [expand]);
   return (
     <Flex style={{ height: "240rpx", overflow: "hidden", padding: "0rpx 12rpx", boxSizing: "border-box" }} alignItems="center">
       <Avatar style={{ width: "120rpx", height: "120rpx" }} size="large" icon={props.data.image || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
@@ -55,10 +59,12 @@ export const Goods = (props: GoodsProps) => {
                   icon="plus"
                   size="normal"
                   color="rgb(249, 220, 74)"
-                  onClick={() => {
+                  onClick={e => {
+                    e.stopPropagation();
+                    setExpand(true);
+                    expand;
                     setAction("click");
                     props.onSelect("add");
-                    setExpand(true);
                   }}
                 ></Button>
               </Animate>
@@ -77,9 +83,10 @@ export const Goods = (props: GoodsProps) => {
                     onChangeFuc={(number: string | number) => {
                       console.log(number, "number");
                     }}
-                    overlimit={() => {
-                      setAction("initial");
+                    overlimit={e => {
+                      e.stopPropagation();
                       setExpand(false);
+                      setAction("initial");
                       props.onSelect("reduce");
                     }}
                   />

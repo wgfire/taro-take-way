@@ -1,20 +1,30 @@
-import { Tabs } from "@nutui/nutui-react-taro";
+import { Empty, Tabs } from "@nutui/nutui-react-taro";
 import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { PageView } from "@src/lib/components/layout/PageView";
 import { StringUtil } from "@src/lib/utils/StringUtil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Goods } from "../goods";
 
 export interface NutTabsProps {
   onSelect(item: GoodsItemProps, type: string): void;
-  total: number;
   goods: GoodsData;
   menus: Array<MenuData>;
 }
 export const NutTabs = (props: NutTabsProps) => {
-  const [tabvalue, setTabvalue] = useState(1);
-  const { total, onSelect, goods } = props;
+  const [tabvalue, setTabvalue] = useState(0);
+  const { onSelect, goods, menus } = props;
+
+  const [currentGoods, setCurrentGoods] = useState<GoodsData>([]);
+
+  useEffect(() => {
+    const renderGood = goods.filter(el => el.menuId === tabvalue);
+    setCurrentGoods(renderGood);
+  }, [goods, setCurrentGoods, tabvalue]);
+
+  useEffect(() => {
+    setTabvalue(menus[0].id);
+  }, [menus]);
 
   return (
     <Tabs
@@ -23,13 +33,14 @@ export const NutTabs = (props: NutTabsProps) => {
       ellipsis
       type="smile"
       onChange={({ paneKey }) => {
-        setTabvalue(paneKey);
+        console.log(paneKey, "key");
+        setTabvalue(Number(paneKey));
       }}
       titleScroll
       direction="vertical"
     >
       {props.menus.map(item => (
-        <Tabs.TabPane key={item.id} title={` ${item.name}`}>
+        <Tabs.TabPane key={item.id} title={` ${item.name}`} paneKey={item.id}>
           <Flex style={{ height: "100%" }}>
             <PageView.ScrollContent
               loadMore={{
@@ -42,18 +53,21 @@ export const NutTabs = (props: NutTabsProps) => {
                 },
               }}
             >
-              {goods.map(goodsItem => {
-                return (
-                  <Goods
-                    key={StringUtil.uniqueId()}
-                    data={goodsItem}
-                    onSelect={type => {
-                      // const newTotal = Number(Number(total + value).toFixed(2));
-                      onSelect(goodsItem, type);
-                    }}
-                  ></Goods>
-                );
-              })}
+              {currentGoods.length > 0 ? (
+                currentGoods.map(goodsItem => {
+                  return (
+                    <Goods
+                      key={StringUtil.uniqueId()}
+                      data={goodsItem}
+                      onSelect={type => {
+                        onSelect(goodsItem, type);
+                      }}
+                    ></Goods>
+                  );
+                })
+              ) : (
+                <Empty></Empty>
+              )}
             </PageView.ScrollContent>
           </Flex>
         </Tabs.TabPane>

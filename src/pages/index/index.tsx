@@ -4,35 +4,12 @@ import { Navigation } from "@src/utils/Navigation";
 import { NutMenu } from "./components/menu";
 import { NutTabs } from "./components/tabs";
 import { usePresenter } from "./presenter";
-import { calculateTotal } from "./utils";
 import { usePresenter as userPresenter } from "@src/moduels/user/usePresenter";
-import { GoodsItemProps } from "@src/apis/goods/get-goods-list";
-import { SelectGoodsProps } from "./model";
 
 const Index = () => {
-  const { model, getData } = usePresenter();
+  const { model, getData, selectGoodsHandel } = usePresenter();
   const { model: userModel } = userPresenter();
-  const { total, expand, selectGoods, loading, goodsData, menuData } = model.state;
-
-  const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
-    const newData = [...selectGoods];
-    const index = selectGoods.findIndex(el => item.menuId === el.menuId);
-    const data = newData[index];
-    const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
-    if (data) {
-      select.num = type === "add" ? select.num + 1 : select.num - 1;
-      newData[index] = select;
-    } else {
-      newData.push(select);
-    }
-    const newSelectGoods = newData.filter(selectItem => selectItem.num > 0);
-    const newTotal = calculateTotal(newSelectGoods);
-    model.setState({
-      total: newTotal,
-      expand: newTotal !== 0,
-      selectGoods: newSelectGoods,
-    });
-  };
+  const { total, expand, loading, goodsData, menuData } = model.state;
 
   return (
     <PageView tabBarPlaceholder loading={!userModel.state.token || loading}>
@@ -40,17 +17,19 @@ const Index = () => {
         <PageView.Content>
           <NutMenu
             onChange={id => {
+              model.resetState();
               getData(id);
             }}
           ></NutMenu>
-          <NutTabs
-            menus={menuData}
-            goods={goodsData}
-            total={total}
-            onSelect={(value, type) => {
-              selectGoodsHandel(value, type);
-            }}
-          ></NutTabs>
+          {menuData.length > 0 && (
+            <NutTabs
+              menus={menuData}
+              goods={goodsData}
+              onSelect={(value, type) => {
+                selectGoodsHandel(value, type);
+              }}
+            ></NutTabs>
+          )}
           <ShopCar
             price={total}
             expand={expand}
