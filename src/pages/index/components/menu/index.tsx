@@ -3,11 +3,14 @@ import { getResidentialList } from "@src/apis/residential/get-residential-list";
 import { useDidMount } from "@src/lib/hooks/lifecycle";
 import { useState } from "react";
 
-export interface NutMenuProps {}
-export const NutMenu = () => {
+export interface NutMenuProps {
+  onChange?: (value: number) => void;
+}
+export const NutMenu = (props: NutMenuProps) => {
   const [residentialList, setResidentialList] = useState([{ text: "全部地区", value: 0 }]);
   const getResidentialListData = async () => {
     const { data } = await getResidentialList();
+    props.onChange?.(data[0].id);
     setResidentialList(() => {
       return data.map(item => {
         return {
@@ -17,8 +20,9 @@ export const NutMenu = () => {
       });
     });
   };
+
   const onChangeHandel = (value: any) => {
-    console.log(value, "改变");
+    props.onChange?.(value.value);
   };
   useDidMount(() => {
     getResidentialListData();

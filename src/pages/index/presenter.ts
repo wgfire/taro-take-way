@@ -1,18 +1,48 @@
-import { getResidentialList } from "@src/apis/residential/get-residential-list";
+import { getMenuGoodsList } from "@src/apis/goods/get-goods-list";
+import { bindResidentialList } from "@src/apis/residential/bind-residential";
 import { GoodsItemProps, SelectGoodsProps, useModel } from "./model";
 import { calculateTotal } from "./utils";
 
 export const usePresenter = () => {
   const model = useModel();
 
-  const getResidentialListData = async () => {
-    const { data } = await getResidentialList();
-    console.log(data, "地区");
+  const getMenuGoodsListData = async () => {
+    try {
+      model.setState({
+        loading: true,
+      });
+      const { data } = await getMenuGoodsList();
+      console.log(data, "商品");
+    } finally {
+      model.setState({
+        loading: false,
+      });
+    }
   };
 
+  const getData = async (id: number) => {
+    try {
+      model.setState({
+        loading: true,
+      });
+      await bindResidentialList({
+        id,
+      });
+      const { data } = await getMenuGoodsList();
+      console.log(data, "商品");
+      model.setState({
+        goodsData: data.goodsVOS,
+        menuData: data.menuVOS,
+      });
+    } finally {
+      model.setState({
+        loading: false,
+      });
+    }
+  };
   const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
     const newData = [...model.state.selectGoods];
-    const index = model.state.selectGoods.findIndex(el => item.id === el.id);
+    const index = model.state.selectGoods.findIndex(el => item.menuId === el.menuId);
     const data = newData[index];
     const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
     if (data) {
@@ -29,5 +59,5 @@ export const usePresenter = () => {
       selectGoods: newSelectGoods,
     });
   };
-  return { model, selectGoodsHandel };
+  return { model, selectGoodsHandel, getMenuGoodsListData, getData };
 };

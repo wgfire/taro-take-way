@@ -3,32 +3,20 @@ import { PageView } from "@src/lib/components/layout/PageView";
 import { Navigation } from "@src/utils/Navigation";
 import { NutMenu } from "./components/menu";
 import { NutTabs } from "./components/tabs";
-import { GoodsItemProps, SelectGoodsProps } from "./model";
 import { usePresenter } from "./presenter";
 import { calculateTotal } from "./utils";
 import { usePresenter as userPresenter } from "@src/moduels/user/usePresenter";
+import { GoodsItemProps } from "@src/apis/goods/get-goods-list";
+import { SelectGoodsProps } from "./model";
 
 const Index = () => {
-  const { model } = usePresenter();
+  const { model, getData } = usePresenter();
   const { model: userModel } = userPresenter();
-  const { total, expand, selectGoods,loading } = model.state;
-  const goods = [
-    {
-      id: "1",
-      price: 6.6,
-    },
-    {
-      id: "2",
-      price: 7.6,
-    },
-    {
-      id: "3",
-      price: 8.6,
-    },
-  ];
+  const { total, expand, selectGoods, loading, goodsData, menuData } = model.state;
+
   const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
     const newData = [...selectGoods];
-    const index = selectGoods.findIndex(el => item.id === el.id);
+    const index = selectGoods.findIndex(el => item.menuId === el.menuId);
     const data = newData[index];
     const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
     if (data) {
@@ -47,12 +35,17 @@ const Index = () => {
   };
 
   return (
-    <PageView tabBarPlaceholder loading={!userModel.state.token || loading }>
+    <PageView tabBarPlaceholder loading={!userModel.state.token || loading}>
       {userModel.state.token && (
         <PageView.Content>
-          <NutMenu></NutMenu>
+          <NutMenu
+            onChange={id => {
+              getData(id);
+            }}
+          ></NutMenu>
           <NutTabs
-            goods={goods}
+            menus={menuData}
+            goods={goodsData}
             total={total}
             onSelect={(value, type) => {
               selectGoodsHandel(value, type);

@@ -1,36 +1,20 @@
 import { Tabs } from "@nutui/nutui-react-taro";
+import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { PageView } from "@src/lib/components/layout/PageView";
-import { View } from "@tarojs/components";
+import { StringUtil } from "@src/lib/utils/StringUtil";
 import { useState } from "react";
-import { GoodsData, GoodsItemProps } from "../../model";
-import { usePresenter } from "../../presenter";
 import { Goods } from "../goods";
 
 export interface NutTabsProps {
   onSelect(item: GoodsItemProps, type: string): void;
   total: number;
   goods: GoodsData;
+  menus: Array<MenuData>;
 }
 export const NutTabs = (props: NutTabsProps) => {
-  const [tabvalue, setTabvalue] = useState("0");
-  const {model} = usePresenter()
-  // const [total, onSelect] = useState(0);
+  const [tabvalue, setTabvalue] = useState(1);
   const { total, onSelect, goods } = props;
-  const list = [
-    {
-      text: "水果",
-      value: "0",
-    },
-    {
-      text: "橘子",
-      value: "1",
-    },
-    {
-      text: "蔬菜",
-      value: "2",
-    },
-  ];
 
   return (
     <Tabs
@@ -44,8 +28,8 @@ export const NutTabs = (props: NutTabsProps) => {
       titleScroll
       direction="vertical"
     >
-      {list.map(item => (
-        <Tabs.TabPane key={item.value} title={` ${item.text}`}>
+      {props.menus.map(item => (
+        <Tabs.TabPane key={item.id} title={` ${item.name}`}>
           <Flex style={{ height: "100%" }}>
             <PageView.ScrollContent
               loadMore={{
@@ -61,7 +45,7 @@ export const NutTabs = (props: NutTabsProps) => {
               {goods.map(goodsItem => {
                 return (
                   <Goods
-                    key={goodsItem.id}
+                    key={StringUtil.uniqueId()}
                     data={goodsItem}
                     onSelect={type => {
                       // const newTotal = Number(Number(total + value).toFixed(2));
