@@ -20,8 +20,20 @@ export const defaultState: IndexState = {
   selectGoods: [],
   expand: false,
   loading: false,
-  menuData: [],
-  goodsData: [],
+  menuData: [
+    { name: "水果", id: 0, sort: 1 },
+    { name: "蔬菜", id: 1, sort: 2 },
+    { name: "香蕉", id: 2, sort: 2 },
+  ],
+  goodsData: [
+    {
+      id: 1,
+      menuId: 0,
+      price: 6,
+      name: "测试",
+      image: "",
+    },
+  ],
 };
 const { useModel, useHydrateState, atom } = createModel<IndexState>(defaultState);
 

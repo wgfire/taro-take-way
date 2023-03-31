@@ -2,7 +2,7 @@ import { InputNumber, Button, Animate, Avatar, ConfigProvider } from "@nutui/nut
 import { Flex } from "@src/lib/components/basic/Flex";
 
 import { View } from "@tarojs/components";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { Text } from "@src/lib/components/basic/Text";
 
@@ -13,23 +13,23 @@ export interface GoodsProps {
   onSelect: (type: string) => void;
   data: GoodsItemProps;
 }
-export const Goods = (props: GoodsProps) => {
+export const Goods = React.memo((props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
-
   const [action, setAction] = useState("click");
-  const [num, setNum] = useState(1);
   const { model } = usePresenter();
   const { selectGoods } = model.state;
-  useEffect(() => {
-    const isSelect = selectGoods.find(item => item.menuId === props.data.menuId);
-    console.log(isSelect, "isselect");
-    if (isSelect) {
-      setNum(isSelect.num);
-    } else {
-      setNum(0);
-      setExpand(false);
-    }
-  }, [props.data.menuId, selectGoods]);
+  const isSelect = selectGoods.find(item => item.id === props.data.id);
+  const [num, setNum] = useState(isSelect?.num);
+  // useEffect(() => {
+  //   const isSelect = selectGoods.find(item => item.id === props.data.id);
+  //   if (isSelect) {
+  //     setExpand(true);
+  //     setNum(isSelect.num);
+  //   } else {
+  //     setNum(0);
+  //     setExpand(false);
+  //   }
+  // }, [props.data.id, selectGoods]);
   useEffect(() => {
     console.log("展开", expand);
   }, [expand]);
@@ -51,7 +51,7 @@ export const Goods = (props: GoodsProps) => {
 
           <View>
             {!expand ? (
-              <Animate type="slide-left" action={action}>
+              <Animate type="slide-left" action={action} key="1">
                 <Button
                   style={{ padding: "0px 16rpx", height: "32rpx" }}
                   shape="square"
@@ -62,14 +62,13 @@ export const Goods = (props: GoodsProps) => {
                   onClick={e => {
                     e.stopPropagation();
                     setExpand(true);
-                    expand;
                     setAction("click");
                     props.onSelect("add");
                   }}
                 ></Button>
               </Animate>
             ) : (
-              <Animate type="slide-right" action="initial">
+              <Animate type="slide-right" action="initial" key="2">
                 <ConfigProvider>
                   <InputNumber
                     readonly
@@ -98,4 +97,4 @@ export const Goods = (props: GoodsProps) => {
       </Flex>
     </Flex>
   );
-};
+});

@@ -14,17 +14,22 @@ export interface NutTabsProps {
 export const NutTabs = (props: NutTabsProps) => {
   const { onSelect, goods, menus } = props;
   const [tabvalue, setTabvalue] = useState(menus[0].id);
-  const [currentGoods] = useState<GoodsData>(goods.filter(el => el.menuId === tabvalue));
+  const [currentGoods, setCurrentGoods] = useState<GoodsData>([]);
 
-  // useEffect(() => {
-  //   const renderGood = goods.filter(el => el.menuId === tabvalue);
-  //   setCurrentGoods(renderGood);
-  // }, [goods, setCurrentGoods, tabvalue]);
+  useEffect(() => {
+    const renderGood = goods.filter(el => el.menuId === tabvalue);
+    setCurrentGoods(renderGood);
+  }, [goods, setCurrentGoods, tabvalue]);
 
   useEffect(() => {
     setTabvalue(menus[0].id);
   }, [menus]);
 
+  const menuData = [
+    { name: "水果", id: 0, sort: 1 },
+    { name: "蔬菜", id: 1, sort: 2 },
+    { name: "香蕉", id: 2, sort: 2 },
+  ];
   return (
     <Tabs
       style={{ height: "calc(100% - 100rpx)", marginTop: "0rpx" }}
@@ -38,7 +43,7 @@ export const NutTabs = (props: NutTabsProps) => {
       titleScroll
       direction="vertical"
     >
-      {props.menus.map(item => (
+      {menuData.map(item => (
         <Tabs.TabPane key={item.id} title={` ${item.name}`} paneKey={item.id}>
           <Flex style={{ height: "100%" }}>
             <PageView.ScrollContent
@@ -54,6 +59,7 @@ export const NutTabs = (props: NutTabsProps) => {
             >
               {currentGoods.length > 0 ? (
                 currentGoods.map(goodsItem => {
+                  console.log("渲染");
                   return (
                     <Goods
                       key={StringUtil.uniqueId()}

@@ -25,7 +25,7 @@ export const CarBox = () => {
         </Flex>
         <Flex flexDirection="column" style={{ maxHeight: "30vh", overflow: "auto" }}>
           {IndexModel.state.selectGoods.map(goods => {
-            return <CarBoxItem key={goods.menuId} data={goods} onSelect={(item, type) => selectGoodsHandel(item, type)}></CarBoxItem>;
+            return <CarBoxItem key={goods.id} data={goods} onSelect={(item, type) => selectGoodsHandel(item, type)}></CarBoxItem>;
           })}
         </Flex>
       </Flex>
