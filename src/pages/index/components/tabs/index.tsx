@@ -12,15 +12,14 @@ export interface NutTabsProps {
   menus: Array<MenuData>;
 }
 export const NutTabs = (props: NutTabsProps) => {
-  const [tabvalue, setTabvalue] = useState(0);
   const { onSelect, goods, menus } = props;
+  const [tabvalue, setTabvalue] = useState(menus[0].id);
+  const [currentGoods] = useState<GoodsData>(goods.filter(el => el.menuId === tabvalue));
 
-  const [currentGoods, setCurrentGoods] = useState<GoodsData>([]);
-
-  useEffect(() => {
-    const renderGood = goods.filter(el => el.menuId === tabvalue);
-    setCurrentGoods(renderGood);
-  }, [goods, setCurrentGoods, tabvalue]);
+  // useEffect(() => {
+  //   const renderGood = goods.filter(el => el.menuId === tabvalue);
+  //   setCurrentGoods(renderGood);
+  // }, [goods, setCurrentGoods, tabvalue]);
 
   useEffect(() => {
     setTabvalue(menus[0].id);
@@ -46,8 +45,8 @@ export const NutTabs = (props: NutTabsProps) => {
               loadMore={{
                 pageNum: 1,
                 pageSize: 10,
-                total: 20,
-                enable: false,
+                total: currentGoods.length,
+                enable: currentGoods.length > 0,
                 onLoadMore: () => {
                   console.log("远程加载");
                 },

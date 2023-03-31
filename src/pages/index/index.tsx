@@ -10,7 +10,6 @@ const Index = () => {
   const { model, getData, selectGoodsHandel } = usePresenter();
   const { model: userModel } = userPresenter();
   const { total, expand, loading, goodsData, menuData } = model.state;
-
   return (
     <PageView tabBarPlaceholder loading={!userModel.state.token || loading}>
       {userModel.state.token && (

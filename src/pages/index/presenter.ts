@@ -42,7 +42,7 @@ export const usePresenter = () => {
   };
   const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
     const newData = [...model.state.selectGoods];
-    const index = model.state.selectGoods.findIndex(el => item.menuId === el.menuId);
+    const index = model.state.selectGoods.findIndex(el => item.id === el.id);
     const data = newData[index];
     const select = { num: data ? data.num : 1, ...item } as SelectGoodsProps;
     if (data) {
