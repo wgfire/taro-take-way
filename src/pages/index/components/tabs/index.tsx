@@ -1,79 +1,72 @@
-import { Tabs } from "@nutui/nutui-react-taro";
+import { Animate, Empty, Tabs } from "@nutui/nutui-react-taro";
+import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { PageView } from "@src/lib/components/layout/PageView";
-import { View } from "@tarojs/components";
-import { useState } from "react";
-import { GoodsData, GoodsItemProps } from "../../model";
-import { usePresenter } from "../../presenter";
+import React, { useEffect, useRef, useState } from "react";
+
 import { Goods } from "../goods";
+import { ScrollView } from "@tarojs/components";
+import { usePresenter } from "../../presenter";
 
 export interface NutTabsProps {
   onSelect(item: GoodsItemProps, type: string): void;
-  total: number;
   goods: GoodsData;
+  menus: Array<MenuData>;
 }
-export const NutTabs = (props: NutTabsProps) => {
-  const [tabvalue, setTabvalue] = useState("0");
-  const {model} = usePresenter()
-  // const [total, onSelect] = useState(0);
-  const { total, onSelect, goods } = props;
-  const list = [
-    {
-      text: "水果",
-      value: "0",
-    },
-    {
-      text: "橘子",
-      value: "1",
-    },
-    {
-      text: "蔬菜",
-      value: "2",
-    },
-  ];
+export const NutTabs = React.memo((props: NutTabsProps) => {
+  const { onSelect, goods, menus } = props;
+  const [tabvalue, setTabvalue] = useState(menus[0].id);
+  const [currentGoods, setCurrentGoods] = useState<GoodsData>(goods.filter(el => el.menuId === tabvalue));
+  const { model } = usePresenter();
+  const [height, setHeight] = useState(100);
+  useEffect(() => {
+    setTimeout(() => {
+      const renderGood = goods.filter(el => el.menuId === tabvalue);
+      setCurrentGoods(renderGood);
+    }, 16);
+  }, [goods, setCurrentGoods, tabvalue]);
+  useEffect(() => {
+    setHeight(model.state.expand ? 200 : 100);
+  }, [model.state.expand]);
+  useEffect(() => {
+    console.log(currentGoods, "当前");
+  }, [currentGoods]);
 
   return (
     <Tabs
-      style={{ height: "calc(100% - 100rpx)", marginTop: "0rpx" }}
+      style={{ height: `calc(100% - ${height}rpx)`, marginTop: "0rpx", overflow: "hidden" }}
+      animatedTime={300}
       value={tabvalue}
       ellipsis
       type="smile"
       onChange={({ paneKey }) => {
-        setTabvalue(paneKey);
+        console.log(paneKey);
+        setTabvalue(paneKey as unknown as number);
       }}
       titleScroll
       direction="vertical"
     >
-      {list.map(item => (
-        <Tabs.TabPane key={item.value} title={` ${item.text}`}>
-          <Flex style={{ height: "100%" }}>
-            <PageView.ScrollContent
-              loadMore={{
-                pageNum: 1,
-                pageSize: 10,
-                total: 20,
-                enable: false,
-                onLoadMore: () => {
-                  console.log("远程加载");
-                },
-              }}
-            >
-              {goods.map(goodsItem => {
+      {props.menus.map(item => (
+        <Tabs.TabPane key={item.id} title={`${item.name}`} paneKey={item.id}>
+          <ScrollView style={{ height: "100%" }} scrollY>
+            {currentGoods.length > 0 ? (
+              currentGoods.map(goodsItem => {
                 return (
                   <Goods
-                    key={goodsItem.id}
+                    key={goodsItem.unid}
                     data={goodsItem}
                     onSelect={type => {
-                      // const newTotal = Number(Number(total + value).toFixed(2));
                       onSelect(goodsItem, type);
                     }}
                   ></Goods>
                 );
-              })}
-            </PageView.ScrollContent>
-          </Flex>
+              })
+            ) : (
+              <Empty></Empty>
+            )}
+          </ScrollView>
         </Tabs.TabPane>
       ))}
     </Tabs>
   );
-};
+});

@@ -1,13 +1,29 @@
 import { Menu, MenuItem } from "@nutui/nutui-react-taro";
+import { bindResidentialList } from "@src/apis/residential/bind-residential";
 import { getResidentialList } from "@src/apis/residential/get-residential-list";
 import { useDidMount } from "@src/lib/hooks/lifecycle";
 import { useState } from "react";
 
-export interface NutMenuProps {}
-export const NutMenu = () => {
+import { getMyInfo } from "@src/apis/my/get-my-info";
+
+export interface NutMenuProps {
+  onChange?: (value: number) => void;
+}
+export const NutMenu = (props: NutMenuProps) => {
   const [residentialList, setResidentialList] = useState([{ text: "全部地区", value: 0 }]);
+  const [bindArea, setBindArea] = useState(0);
   const getResidentialListData = async () => {
     const { data } = await getResidentialList();
+    const user = await getMyInfo();
+    if (!user.data.rqId) {
+      await bindResidentialList({
+        id: data[0].id,
+      });
+      setBindArea(data[0].id);
+    } else {
+      setBindArea(user.data.rqId);
+    }
+    props.onChange?.(data[0].id);
     setResidentialList(() => {
       return data.map(item => {
         return {
@@ -17,8 +33,13 @@ export const NutMenu = () => {
       });
     });
   };
-  const onChangeHandel = (value: any) => {
-    console.log(value, "改变");
+
+  const onChangeHandel = async (value: any) => {
+    await bindResidentialList({
+      id: value.value,
+    });
+    setBindArea(value.value);
+    props.onChange?.(value.value);
   };
   useDidMount(() => {
     getResidentialListData();
@@ -29,7 +50,7 @@ export const NutMenu = () => {
       <Menu activeColor="black">
         <MenuItem
           options={residentialList}
-          value={residentialList[0].value}
+          value={bindArea}
           onChange={value => {
             onChangeHandel(value);
           }}

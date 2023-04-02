@@ -11,13 +11,13 @@ export const GoodsItem = (props: GoodsItemProps) => {
   const { data } = props;
   return (
     <Flex style={{ margin: "10rpx 0px", padding: "20rpx", background: "white" }} alignItems="center">
-      <Avatar url="https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg" size="normal"></Avatar>
+      <Avatar url={data.image || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} size="normal"></Avatar>
       <Flex flexGrow={1} flexDirection="column" style={{ marginLeft: "50rpx", marginRight: "18rpx", width: 0 }}>
         <Text size="28rpx" ellipsis>
-          这是一个橙子
+          {data.name}
         </Text>
         <Text size="24rpx" ellipsis color="lightGray#999999">
-          这是一个橙子
+          {data.name}
         </Text>
       </Flex>
       <Text style={{ width: "100rpx" }}>x{data.num}</Text>

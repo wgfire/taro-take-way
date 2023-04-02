@@ -5,23 +5,38 @@ import { View } from "@tarojs/components";
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import { Text } from "@src/lib/components/basic/Text";
-import { GoodsItemProps, SelectGoodsProps } from "../../model";
+
 import { usePresenter } from "../../presenter";
+import { GoodsItemProps } from "@src/apis/goods/get-goods-list";
+import { useDebounce } from "@src/lib/hooks/useDebounce";
 
 export interface GoodsProps {
   onSelect: (type: string) => void;
-  imgUrl?: string;
   data: GoodsItemProps;
 }
 export const Goods = (props: GoodsProps) => {
   const [expand, setExpand] = useState(false);
   const [action, setAction] = useState("click");
-  const [num, setNum] = useState(1);
+
   const { model } = usePresenter();
   const { selectGoods } = model.state;
+  const [num, setNum] = useState(0);
+  const [disabled, setDisabled] = useState(false);
+  const add = useDebounce(() => {
+    console.log("add");
+    props.onSelect("add");
+    setDisabled(false);
+  }, 800);
+  const reduce = useDebounce(() => {
+    console.log("reduce");
+    props.onSelect("reduce");
+    setDisabled(false);
+  }, 800);
   useEffect(() => {
+    // console.log(selectGoods, "已选择商品");
     const isSelect = selectGoods.find(item => item.id === props.data.id);
     if (isSelect) {
+      setExpand(true);
       setNum(isSelect.num);
     } else {
       setNum(0);
@@ -30,15 +45,15 @@ export const Goods = (props: GoodsProps) => {
   }, [props.data.id, selectGoods]);
   return (
     <Flex style={{ height: "240rpx", overflow: "hidden", padding: "0rpx 12rpx", boxSizing: "border-box" }} alignItems="center">
-      <Avatar style={{ width: "120rpx", height: "120rpx" }} size="large" icon={props.imgUrl || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
+      <Avatar style={{ width: "120rpx", height: "120rpx" }} size="large" icon={props.data.image || "https://img.zcool.cn/community/0188ff5cd806eea801214168612aa2.jpg@2o.jpg"} />
 
       <Flex flexDirection="column" style={{ marginLeft: "26rpx", width: 0 }} flexGrow={1}>
         <Text size="26rpx" style={{ marginBottom: "18rpx" }} ellipsis>
-          这是一个橙汁这是一个橙汁这是一个橙汁这是一个橙汁
+          {props.data.name}
         </Text>
 
         <Text className={styles.ellipse} color="lightGray#999999" size="24rpx">
-          这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子这是一个橙子
+          {props.data.name}
         </Text>
 
         <Flex justifyContent="space-between" alignItems="center" style={{ height: "60rpx" }}>
@@ -68,19 +83,24 @@ export const Goods = (props: GoodsProps) => {
                     readonly
                     modelValue={num}
                     onAdd={() => {
-                      props.onSelect("add");
+                      setDisabled(true);
+                      add();
                     }}
+                    disabled={disabled}
                     onReduce={() => {
-                      props.onSelect("reduce");
+                      setDisabled(true);
+                      reduce();
                     }}
                     onChangeFuc={(number: string | number) => {
                       console.log(number, "number");
                     }}
-                    overlimit={() => {
-                      setAction("initial");
-                      setExpand(false);
-                      props.onSelect("reduce");
-                    }}
+                    // overlimit={() => {
+                    //   console
+                    //   if (disabled) return false;
+                    //   setAction("initial");
+                    //   setExpand(false);
+                    //   props.onSelect("reduce");
+                    // }}
                   />
                 </ConfigProvider>
               </Animate>

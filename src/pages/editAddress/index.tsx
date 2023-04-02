@@ -9,54 +9,52 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { useState } from "react";
 import { usePresenter } from "../address/presenter";
 import styles from "./index.module.scss";
+import { getPhone } from "@src/apis/login/get-phone";
+import { SubmitAddressData, updateAddress } from "@src/apis/address/add-address";
+import { number } from "yargs";
 
 const EditAddress = () => {
   const { params } = useRouter();
   const { model } = usePresenter();
-  const [text, setText] = useState(params.content ? decodeURIComponent(params.content) : "请选择地址");
-  const [phone, setPhone] = useState(params.tel ?? "");
-  const [name, setName] = useState(params.name ? decodeURIComponent(params.name) : "");
-
-  const save = () => {
-    if (!text || !name) {
+  const [text, setText] = useState(params.address ? decodeURIComponent(params.address) : "");
+  const [phone, setPhone] = useState(params.phone ?? "");
+  const [contacts, setName] = useState(params.contacts ? decodeURIComponent(params.contacts) : "");
+  const [loading, setLoading] = useState(false);
+  const save = async () => {
+    if (!text || !contacts || !phone) {
       Taro.showModal({
         title: "提示",
         content: "请填写所有必填项",
       });
     } else {
-      const newAddress = [...model.state.address];
-      if (params.tel) {
-        const index = newAddress.findIndex(el => el.tel === params.tel);
-        if (index > -1) {
-          newAddress[index] = {
-            tel: params.tel,
-            name,
-            content: text,
-            default: params.default === "1",
-          };
-        }
+      setLoading(true);
+      if (params.id) {
+        await updateAddress({
+          address: text,
+          contacts,
+          phone,
+          isDefault: params.isDefault === "1",
+          id: Number(params.id),
+        });
       } else {
-        newAddress.push({
-          tel: phone,
-          content: text,
-          default: false,
-          name,
+        await SubmitAddressData({
+          address: text,
+          contacts,
+          phone,
+          isDefault: false,
         });
       }
-      model.setState({
-        address: newAddress,
-      });
 
-      Navigation.navigateTo("/pages/address/index");
+      Navigation.navigateBack();
     }
   };
   return (
-    <PageView>
+    <PageView >
       <PageView.Content flexGrow={1}>
         <FormItem required label="姓名" direction="column">
           <Input
             placeholder="请输入姓名"
-            defaultValue={name}
+            defaultValue={contacts}
             style={{ padding: "12rpx 0rpx" }}
             onChange={value => {
               setName(value);
@@ -71,9 +69,14 @@ const EditAddress = () => {
                 openType="getPhoneNumber"
                 style={{ padding: "0rpx", width: "190rpx" }}
                 size="small"
-                onGetPhoneNumber={e => {
+                onGetPhoneNumber={async e => {
                   // debugger;
-                  console.log(e, "回调");
+                  if (e.detail.code) {
+                    const result = await getPhone({ code: e.detail.code });
+                    result.data && setPhone(result.data);
+                  } else {
+                    Taro.showModal({ title: "提示", content: "获取手机号失败" });
+                  }
                 }}
               >
                 <Text color="lightGray#999999">点击授权获取</Text>
@@ -86,6 +89,7 @@ const EditAddress = () => {
         <FormItem required label="地址信息" direction="column">
           <Input
             style={{ padding: "12rpx 0rpx" }}
+            defaultValue={text}
             placeholder="输入地址"
             onChange={value => {
               setText(value);

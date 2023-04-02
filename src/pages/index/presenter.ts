@@ -1,16 +1,58 @@
-import { getResidentialList } from "@src/apis/residential/get-residential-list";
-import { GoodsItemProps, SelectGoodsProps, useModel } from "./model";
+import { getMenuGoodsList, GoodsItemProps } from "@src/apis/goods/get-goods-list";
+import { bindResidentialList } from "@src/apis/residential/bind-residential";
+import { SelectGoodsProps, useModel } from "./model";
 import { calculateTotal } from "./utils";
+import { addShopCarData, getShopCarData } from "@src/apis/goods/set-goods";
+import Taro from "@tarojs/taro";
+import { StringUtil } from "@src/lib/utils/StringUtil";
 
 export const usePresenter = () => {
   const model = useModel();
 
-  const getResidentialListData = async () => {
-    const { data } = await getResidentialList();
-    console.log(data, "地区");
+  const getData = async (id: number) => {
+    try {
+      Taro.showLoading({ title: "加载中" });
+      model.setState({
+        loading: true,
+      });
+
+      const { data } = await getMenuGoodsList();
+      const { data: shopData } = await getShopCarData();
+      console.log(data, "商品", shopData, "购物车");
+      const selectGoods: SelectGoodsProps[] = [];
+      if (shopData.goodsVOS) {
+        data.goodsVOS.forEach(el => {
+          const flag = shopData.goodsVOS.find((item: any) => {
+            return el.id === item.goodsId;
+          });
+          if (flag) {
+            selectGoods.push({ ...el, num: flag.quantity });
+          }
+        });
+      }
+
+      model.setState({
+        goodsData: data.goodsVOS.map(el => {
+          return { ...el, unid: StringUtil.uniqueId() };
+        }),
+        menuData: data.menuVOS.map(el => {
+          return { ...el, unid: StringUtil.uniqueId() };
+        }),
+        selectGoods,
+        expand: selectGoods.length > 0,
+        total: shopData.totalPrice ?? 0,
+      });
+    } finally {
+      model.setState({
+        loading: false,
+      });
+      Taro.hideLoading();
+    }
   };
 
-  const selectGoodsHandel = (item: GoodsItemProps, type: string) => {
+  const selectGoodsHandel = async (item: GoodsItemProps, type: string) => {
+    const result = await addShopCarData({ goodsId: item.id, operation: type === "add" ? 1 : -1 });
+    if (result.code !== 1000) return false;
     const newData = [...model.state.selectGoods];
     const index = model.state.selectGoods.findIndex(el => item.id === el.id);
     const data = newData[index];
@@ -23,11 +65,11 @@ export const usePresenter = () => {
     }
     const newSelectGoods = newData.filter(selectItem => selectItem.num > 0);
     const newTotal = calculateTotal(newSelectGoods);
-    model.setState({
+    return model.setState({
       total: newTotal,
       expand: newTotal !== 0,
       selectGoods: newSelectGoods,
     });
   };
-  return { model, selectGoodsHandel };
+  return { model, selectGoodsHandel, getData };
 };

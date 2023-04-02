@@ -1,12 +1,8 @@
-import { GetResidentialListResult } from "@src/apis/residential/get-residential-list";
+import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
+
 import { createModel } from "@src/utils/mvp";
+import { number } from "yargs";
 
-export interface GoodsItemProps {
-  id: string;
-  price: number;
-}
-
-export type GoodsData = Array<GoodsItemProps>;
 export interface SelectGoodsProps extends GoodsItemProps {
   num: number;
 }
@@ -16,6 +12,8 @@ export interface IndexState {
   selectGoods: Array<SelectGoodsProps>;
   expand: boolean;
   loading: boolean;
+  menuData: Array<MenuData>;
+  goodsData: GoodsData;
 }
 
 export const defaultState: IndexState = {
@@ -23,6 +21,8 @@ export const defaultState: IndexState = {
   selectGoods: [],
   expand: false,
   loading: false,
+  menuData: [],
+  goodsData: [],
 };
 const { useModel, useHydrateState, atom } = createModel<IndexState>(defaultState);
 

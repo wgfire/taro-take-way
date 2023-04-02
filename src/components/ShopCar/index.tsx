@@ -6,7 +6,7 @@ import styles from "./index.module.scss";
 import classNames from "classnames";
 import { RouteUtil } from "@src/utils/RouteUtil";
 import { CarBox } from "./CarBox";
-import { useState } from "react";
+import { useModel } from "./model";
 
 export interface ShopCarProps {
   price: number;
@@ -15,13 +15,19 @@ export interface ShopCarProps {
 }
 export const ShopCar = (props: ShopCarProps) => {
   const { expand } = props;
-  const [showCarBox, setShowCarBox] = useState(false);
-
-  console.log(props.price, "current");
+  const model = useModel();
+  const indexPage = RouteUtil.getCurrentPagePath() === "/pages/index/index";
   return expand ? (
     <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !RouteUtil.isTabRoute() ? styles.tabBarSafe : "")}>
-      <View className={styles.shopCar}>
-        <View style={{ display: "flex", alignItems: "center" }} onClick={() => setShowCarBox(!showCarBox)}>
+      {indexPage && model.state.showCar && <CarBox></CarBox>}
+      <View
+        className={styles.shopCar}
+        onTap={() => {
+          console.log("s");
+          model.setState({ showCar: !model.state.showCar });
+        }}
+      >
+        <View style={{ display: "flex", alignItems: "center" }}>
           <Icon name="cart" size={30}></Icon>
           <Text size="36rpx" style={{ marginLeft: "12rpx" }}>
             ￥
@@ -30,7 +36,8 @@ export const ShopCar = (props: ShopCarProps) => {
         </View>
         <Button
           size="large"
-          onClick={() => {
+          onClick={e => {
+            e.stopPropagation();
             props.onClick?.();
           }}
           shape="square"
@@ -41,8 +48,6 @@ export const ShopCar = (props: ShopCarProps) => {
           <Text color="white">去结算</Text>
         </Button>
       </View>
-
-      {showCarBox && <CarBox></CarBox>}
     </Animate>
   ) : null;
 };

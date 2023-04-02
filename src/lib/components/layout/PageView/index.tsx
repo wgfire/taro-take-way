@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classnames from "classnames";
 import { Flex } from "../../basic/Flex";
 import { Content } from "./Content";
@@ -10,6 +10,7 @@ import { Footer } from "./Footer";
 import styles from "./index.module.scss";
 import { View, ViewProps } from "@tarojs/components";
 import { NutToast } from "../../basic/Toast";
+import Taro from "@tarojs/taro";
 
 export type PageContentBackgroundColor = "white" | "lightGray";
 
@@ -56,6 +57,7 @@ export class PageView extends React.PureComponent<PageViewProps> {
 
   override render() {
     const { loading, tabBarPlaceholder, backgroundColor, className, children } = this.props;
+
     return (
       <React.Fragment>
         <Flex flexDirection="column" flexGrow={1} className={classnames(styles.pageView, this.classMap[backgroundColor!], className)}>

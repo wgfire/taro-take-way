@@ -1,23 +1,32 @@
-import { Animate } from "@nutui/nutui-react-taro";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { Text } from "@src/lib/components/basic/Text";
 import { usePresenter } from "@src/pages/index/presenter";
 import { CarBoxItem } from "./CarBoxItem";
 
 import styles from "./index.module.scss";
+import { clearShopCar } from "@src/apis/goods/set-goods";
+import { View } from "@tarojs/components";
+import { useModel } from "./model";
 
 export const CarBox = () => {
   const { model: IndexModel, selectGoodsHandel } = usePresenter();
+  const model = useModel();
   return (
-    <Animate type="slide-bottom" className={styles.carboxWapper} action="initial">
+    <View className={styles.carboxWapper}>
       <Flex className={styles.carboxContent} flexDirection="column">
         <Flex justifyContent="space-between" style={{ width: "100%", padding: "10rpx 0rpx 20rpx 0rpx" }}>
           <Text size="26rpx">商品列表</Text>
           <Text
             size="26rpx"
             color="darkGray#666666"
-            onClick={() => {
-              IndexModel.resetState();
+            onClick={async () => {
+              await clearShopCar({ goodsIds: IndexModel.state.selectGoods.map(el => el.id) });
+              IndexModel.setState({
+                total: 0,
+                selectGoods: [],
+                expand: false,
+              });
+              model.resetState();
             }}
           >
             清空购物车
@@ -29,6 +38,6 @@ export const CarBox = () => {
           })}
         </Flex>
       </Flex>
-    </Animate>
+    </View>
   );
 };

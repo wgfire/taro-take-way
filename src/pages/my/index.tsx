@@ -8,12 +8,16 @@ import { Text } from "@src/lib/components/basic/Text";
 import { Flex } from "@src/lib/components/basic/Flex";
 import { Navigation } from "@src/utils/Navigation";
 import { usePresenter } from "./presenter";
-import { useWillUnmount } from "@src/lib/hooks/lifecycle";
+import { useDidMount, useWillUnmount } from "@src/lib/hooks/lifecycle";
 
 const PageIndex = () => {
-  const { avatar, onChooseAvatar, model } = usePresenter();
+  const { avatar, getMyInfoData, onChooseAvatar, model } = usePresenter();
 
   const userInfo = model.state.userInfo;
+
+  useDidMount(() => {
+    getMyInfoData();
+  });
 
   useWillUnmount(() => {
     model.resetState();
@@ -24,10 +28,10 @@ const PageIndex = () => {
         <View className={styles.top}>
           <Flex className={styles.userCard} alignItems="center">
             <Button className={styles.avatarWrapper} open-type="chooseAvatar" onChooseAvatar={e => onChooseAvatar(e.detail.avatarUrl)}>
-              <Avatar className={styles.avatar} size="large" url={avatar}></Avatar>
+              <Avatar className={styles.avatar} size="large" url={userInfo.image || avatar}></Avatar>
             </Button>
             <Flex flexDirection="column" flexGrow={1} style={{ marginLeft: "24rpx" }}>
-              <Text size="40rpx">{userInfo.name}</Text>
+              <Text size="40rpx">{userInfo.nickname}</Text>
             </Flex>
           </Flex>
         </View>

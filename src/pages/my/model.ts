@@ -1,14 +1,15 @@
+import { userProps } from "@src/apis/my/get-my-info";
 import { createModel } from "@src/utils/mvp";
 
 export interface MyState {
-  userInfo: {
-    name: string;
-  };
+  userInfo: userProps;
 }
 
 export const defaultState: MyState = {
   userInfo: {
-    name: "test",
+    nickname: "姓名",
+    image: "",
+    rqId: 0,
   },
 };
 const { useModel, useHydrateState, atom } = createModel<MyState>(defaultState);

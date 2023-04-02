@@ -1,8 +1,8 @@
-import Taro from "@tarojs/taro";
+import Taro, { eventCenter } from "@tarojs/taro";
 import { storageUtil } from "./storageUtil";
 import { paths } from "@src/config/env.config";
 import { MessageException, ServerErrorException } from "./exception";
-
+import { usePresenter } from "../moduels/user/usePresenter";
 /** 接口返回的数据定义，业务数据在 data 中 */
 export interface ResponseData<T> {
   /** 值为 false 代表请求出现异常 */
@@ -10,9 +10,7 @@ export interface ResponseData<T> {
   code: number;
   message: string;
   // FIXME: 后端遗留问题
-  data:
-    | T // 登录接口没有 result
-    
+  data: T; // 登录接口没有 result
 }
 
 const domainInterceptor = (chain: Taro.Chain) => {
@@ -36,12 +34,6 @@ const exceptionInterceptor = (chain: Taro.Chain) => {
   return chain.proceed(chain.requestParams).then((response: Taro.request.SuccessCallbackResult<ResponseData<unknown>>) => {
     const { data, statusCode } = response;
     const { success, code, message } = data;
-
-    // TODO: 根据网络未连接时的信息，更新条件语句
-    // if ("网络断开") {
-    // 	throw new NetworkException();
-    // }
-
     if (statusCode >= 400 && statusCode < 600) {
       throw new ServerErrorException(chain.requestParams.url, chain.requestParams.data, statusCode, response.errMsg);
     }
@@ -53,6 +45,9 @@ const exceptionInterceptor = (chain: Taro.Chain) => {
           title: message,
           icon: "error",
         });
+        if (code === 2015) {
+          eventCenter.trigger("login");
+        }
         throw new Error(message);
       }
     }
@@ -103,8 +98,9 @@ Taro.addInterceptor(exceptionInterceptor);
  */
 export const request = async <Res = any, Data extends string | TaroGeneral.IAnyObject | ArrayBuffer = any>(option: Taro.request.Option<ResponseData<Res>, Data>) => {
   // const result = await preflight().then(() => Taro.request<ResponseData<Res>>(option));
+  Taro.showLoading({ title: "加载中" });
   const result = await Taro.request<ResponseData<Res>>(option);
-
+  Taro.hideLoading();
   /** 提取业务数据 */
   return result.data;
 };
