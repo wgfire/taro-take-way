@@ -1,5 +1,4 @@
 import { getMenuGoodsList, GoodsItemProps } from "@src/apis/goods/get-goods-list";
-import { bindResidentialList } from "@src/apis/residential/bind-residential";
 import { SelectGoodsProps, useModel } from "./model";
 import { calculateTotal } from "./utils";
 import { addShopCarData, getShopCarData } from "@src/apis/goods/set-goods";
@@ -9,7 +8,7 @@ import { StringUtil } from "@src/lib/utils/StringUtil";
 export const usePresenter = () => {
   const model = useModel();
 
-  const getData = async (id: number) => {
+  const getData = async () => {
     try {
       Taro.showLoading({ title: "加载中" });
       model.setState({

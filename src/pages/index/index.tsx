@@ -45,7 +45,7 @@ const Index = () => {
             onChange={value => {
               console.log(value);
               model.resetState();
-              getData(value);
+              getData();
             }}
           ></NutMenu>
           {menuData.length > 0 && (

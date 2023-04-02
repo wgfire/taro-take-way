@@ -1,7 +1,6 @@
 import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
-
 import { createModel } from "@src/utils/mvp";
-import { number } from "yargs";
+
 
 export interface SelectGoodsProps extends GoodsItemProps {
   num: number;

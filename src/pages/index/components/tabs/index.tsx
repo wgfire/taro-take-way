@@ -1,12 +1,11 @@
-import { Animate, Empty, Tabs } from "@nutui/nutui-react-taro";
 import { GoodsData, GoodsItemProps, MenuData } from "@src/apis/goods/get-goods-list";
-import { Flex } from "@src/lib/components/basic/Flex";
-import { PageView } from "@src/lib/components/layout/PageView";
-import React, { useEffect, useRef, useState } from "react";
+
+import React, { useEffect, useState } from "react";
 
 import { Goods } from "../goods";
 import { ScrollView } from "@tarojs/components";
 import { usePresenter } from "../../presenter";
+import { Empty, Tabs } from "@nutui/nutui-react-taro";
 
 export interface NutTabsProps {
   onSelect(item: GoodsItemProps, type: string): void;
