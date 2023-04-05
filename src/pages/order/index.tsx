@@ -5,10 +5,11 @@ import { Flex } from "@src/lib/components/basic/Flex";
 import { PageView } from "@src/lib/components/layout/PageView";
 import { useDidMount } from "@src/lib/hooks/lifecycle";
 import { Navigation } from "@src/utils/Navigation";
-import { View } from "@tarojs/components";
-import Taro, { eventCenter } from "@tarojs/taro";
+
+import Taro, { eventCenter, useDidShow } from "@tarojs/taro";
 
 import { usePresenter as useIndexPresenter } from "../index/presenter";
+import { usePresenter as useAddressPresenter } from "../address/presenter";
 import { calculateTotal } from "../index/utils";
 import { GoodsItem } from "./goodsItem";
 import { usePresenter } from "./presenter";
@@ -17,19 +18,51 @@ import { submitOrder } from "@src/apis/order/submit-order";
 import { useState } from "react";
 
 const Order = () => {
-  const { model: indexModel } = useIndexPresenter();
+  const { model: indexModel, selectGoodsTotal } = useIndexPresenter();
   const { model } = usePresenter();
+  const { getAddressListData, model: adModel } = useAddressPresenter();
   const { selectGoods } = indexModel.state;
   const [remark, setRemark] = useState("");
 
-  useDidMount(() => {
+  useDidShow(async () => {
+    await getAddressListData();
+    setTimeout(() => {
+      if (adModel.state.address.length > 0) {
+        const isdefaul = adModel.state.address.filter(el => `${el.contacts}--${el.address}` === model.state.address);
+        if (isdefaul.length <= 0) {
+          model.setState({
+            address: "",
+            id: 0,
+          });
+        }
+      } else {
+        model.setState({
+          address: "",
+          id: 0,
+        });
+      }
+    }, 0);
+  });
+
+  useDidMount(async () => {
     console.log(indexModel.state.selectGoods, "选择的商品");
+    await getAddressListData();
     eventCenter.on("selectAddress", (data, id) => {
       model.setState({
         address: data,
         id,
       });
     });
+    setTimeout(() => {
+      if (adModel.state.address.length > 0) {
+        const isdefaul = adModel.state.address.filter(el => el.isDefault);
+        const defaul = isdefaul.length > 0 ? isdefaul[0] : adModel.state.address[0];
+        model.setState({
+          address: defaul.contacts + defaul.address,
+          id: defaul.id as number,
+        });
+      }
+    }, 0);
   });
   const pay = async () => {
     if (!model.state.address) {
@@ -59,7 +92,7 @@ const Order = () => {
   return (
     <PageView tabBarPlaceholder loading={false} backgroundColor="lightGray">
       <PageView.Content style={{ marginBottom: "70rpx" }}>
-        <Cell title={model.state.address || "请选择收货地址"} isLink to="/pages/address/index?link=order" />
+        <Cell title={model.state.address || "请选择收货地址"} isLink to="/pages/address/index?link=order" style={{ height: "100rpx", display: "flex", alignItems: "center" }} />
         <Divider styles={{ color: "#9E9E9E", borderColor: "#9E9E9E", height: "36rpx", padding: "0px 12rpx", marginBottom: "30rpx" }} direction="vertical">
           商品列表
         </Divider>
@@ -83,7 +116,7 @@ const Order = () => {
           maxlength="500"
         />
       </PageView.Content>
-      <ShopCar price={calculateTotal(selectGoods)} expand onClick={() => pay()}></ShopCar>
+      <ShopCar total={selectGoodsTotal()} price={calculateTotal(selectGoods)} expand onClick={() => pay()}></ShopCar>
     </PageView>
   );
 };

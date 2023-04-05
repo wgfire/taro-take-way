@@ -1,11 +1,11 @@
 const __DEV__ = process.env.NODE_ENV === "development";
 const RUN_ENV = process.env.RUN_ENV;
 
-const baseModule = "2b151e4203";
+const baseModule = "2b151e4203"; // "jinshuiloutai"; // "2b151e4203";
 
 export const ENV_CONFIG = {
   test: {
-    domain: "zicp.fun",
+    domain: "zicp.fun", // "co", // "zicp.fun",
   },
   beta: {
     domain: "b2bmir.com",

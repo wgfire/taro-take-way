@@ -7,12 +7,13 @@ import styles from "./index.module.scss";
 import { clearShopCar } from "@src/apis/goods/set-goods";
 import { View } from "@tarojs/components";
 import { useModel } from "./model";
+import classNames from "classnames";
 
 export const CarBox = () => {
   const { model: IndexModel, selectGoodsHandel } = usePresenter();
   const model = useModel();
   return (
-    <View className={styles.carboxWapper}>
+    <View className={classNames(styles.carboxWapper, model.state.showCar ? styles.showCarWarpper : "")}>
       <Flex className={styles.carboxContent} flexDirection="column">
         <Flex justifyContent="space-between" style={{ width: "100%", padding: "10rpx 0rpx 20rpx 0rpx" }}>
           <Text size="26rpx">商品列表</Text>

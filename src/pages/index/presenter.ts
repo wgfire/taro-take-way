@@ -31,12 +31,16 @@ export const usePresenter = () => {
       }
 
       model.setState({
-        goodsData: data.goodsVOS.map(el => {
-          return { ...el, unid: StringUtil.uniqueId() };
-        }),
-        menuData: data.menuVOS.map(el => {
-          return { ...el, unid: StringUtil.uniqueId() };
-        }),
+        goodsData: data.goodsVOS
+          ? data.goodsVOS.map(el => {
+              return { ...el, unid: StringUtil.uniqueId() };
+            })
+          : [],
+        menuData: data.menuVOS
+          ? data.menuVOS.map(el => {
+              return { ...el, unid: StringUtil.uniqueId() };
+            })
+          : [],
         selectGoods,
         expand: selectGoods.length > 0,
         total: shopData.totalPrice ?? 0,
@@ -70,5 +74,13 @@ export const usePresenter = () => {
       selectGoods: newSelectGoods,
     });
   };
-  return { model, selectGoodsHandel, getData };
+  const selectGoodsTotal = () => {
+    let total = 0;
+
+    total = model.state.selectGoods.reduce((pre, curr) => {
+      return pre + curr.num;
+    }, 0);
+    return total;
+  };
+  return { model, selectGoodsHandel, getData, selectGoodsTotal };
 };

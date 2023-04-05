@@ -8,8 +8,8 @@ export const usePresenter = () => {
     try {
       model.setState({ loading: true });
       const result = await getAddressList();
-      console.log(result, "x");
-      model.setState({address:result.data})
+
+      model.setState({ address: result.data });
     } finally {
       model.setState({ loading: false });
     }

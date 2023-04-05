@@ -9,12 +9,12 @@ page {
   --nutui-tabs-titles-item-active-color: rgba(18, 20, 20, 0.568);
   --nutui-tabs-titles-item-color: rgba(5, 7, 7, 0.568);
 
-  --nutui-inputnumber-icon-size: 30rpx;
-  --nutui-inputnumber-button-width: 45rpx;
-  --nutui-inputnumber-button-height: 45rpx;
+  --nutui-inputnumber-icon-size: 35rpx;
+  --nutui-inputnumber-button-width: 50rpx;
+  --nutui-inputnumber-button-height: 50rpx;
   --nutui-inputnumber-button-background-color: rgb(249, 220, 74);
   --nutui-inputnumber-input-background-color: #fff;
-  --nutui-inputnumber-input-margin: 0 6rpx;
+  --nutui-inputnumber-input-margin: 0 8rpx;
   --nutui-inputnumber-icon-color: black;
   --nutui-inputnumber-icon-disabled-color: black;
   --nutui-button-default-border-color: transparent;
@@ -33,4 +33,7 @@ page {
 }
 .nut-tabpane {
   padding: 10rpx !important;
+}
+.nutui-iconfont {
+  font-size: 36rpx !important;
 }

@@ -12,6 +12,7 @@ export interface ShopCarProps {
   price: number;
   expand: boolean;
   onClick?: () => void;
+  total: number;
 }
 export const ShopCar = (props: ShopCarProps) => {
   const { expand } = props;
@@ -19,7 +20,7 @@ export const ShopCar = (props: ShopCarProps) => {
   const indexPage = RouteUtil.getCurrentPagePath() === "/pages/index/index";
   return expand ? (
     <Animate type="slide-bottom" className={classNames(styles.shopCarWarpper, !RouteUtil.isTabRoute() ? styles.tabBarSafe : "")}>
-      {indexPage && model.state.showCar && <CarBox></CarBox>}
+      {indexPage && <CarBox></CarBox>}
       <View
         className={styles.shopCar}
         onTap={() => {
@@ -33,6 +34,9 @@ export const ShopCar = (props: ShopCarProps) => {
             ￥
           </Text>
           <AnimatingNumbers.CountUp endNumber={props.price.toFixed(2)} easeSpeed={0.5} maxLen={2} thousands={false} />
+          <Text size="24rpx" style={{ marginLeft: "16rpx" }}>
+            商品数量 {props.total ?? 0}
+          </Text>
         </View>
         <Button
           size="large"
@@ -45,7 +49,7 @@ export const ShopCar = (props: ShopCarProps) => {
           color="black"
           style={{ height: "100%", width: "160rpx", borderRadius: "10rpx 20rpx 10rpx 20rpx" }}
         >
-          <Text color="white">去结算</Text>
+          <Text color="white">去结算 </Text>
         </Button>
       </View>
     </Animate>

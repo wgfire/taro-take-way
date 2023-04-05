@@ -7,6 +7,7 @@ export interface GoodsItemProps {
   image: string;
   id: number;
   unid: string;
+  describe:string
 }
 
 export type GoodsData = Array<GoodsItemProps>;

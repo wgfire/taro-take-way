@@ -3,7 +3,7 @@
 import { request } from "@src/utils/request";
 
 export const setShopGoodsData = (params: { goodsIds: Array<number> }) => {
-  return request<any>({
+  return request<{ totalPrice: number }>({
     url: "/api/wechat/shopping-cart/to-settle",
     method: "POST",
     data: params,

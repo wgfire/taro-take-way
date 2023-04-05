@@ -3,7 +3,7 @@ import { request } from "@src/utils/request";
 export interface ResidentialItem {
   id: number;
   name: string;
-  image: string;
+  image?: string;
 }
 export type GetResidentialListResult = Array<ResidentialItem>;
 

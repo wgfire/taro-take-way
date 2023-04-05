@@ -17,7 +17,7 @@ export const GoodsItem = (props: GoodsItemProps) => {
           {data.name}
         </Text>
         <Text size="24rpx" ellipsis color="lightGray#999999">
-          {data.name}
+          {data.describe}
         </Text>
       </Flex>
       <Text style={{ width: "100rpx" }}>x{data.num}</Text>

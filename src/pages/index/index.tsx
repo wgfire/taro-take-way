@@ -15,7 +15,7 @@ import styles from "./index.module.scss";
 import { useModel } from "@src/components/ShopCar/model";
 
 const Index = () => {
-  const { model, getData, selectGoodsHandel } = usePresenter();
+  const { model, getData, selectGoodsHandel, selectGoodsTotal } = usePresenter();
   const { model: userModel } = userPresenter();
   const { total, expand, loading, goodsData, menuData, selectGoods } = model.state;
   const [ready, setReady] = useState(false);
@@ -48,7 +48,7 @@ const Index = () => {
               getData();
             }}
           ></NutMenu>
-          {menuData.length > 0 && (
+          {menuData.length > 0 ? (
             <NutTabs
               menus={menuData}
               goods={goodsData}
@@ -56,14 +56,20 @@ const Index = () => {
                 selectGoodsHandel(value, type);
               }}
             ></NutTabs>
+          ) : (
+            <Empty></Empty>
           )}
 
           <ShopCar
             price={total}
             expand={expand}
+            total={selectGoodsTotal()}
             onClick={async () => {
               const result = await setShopGoodsData({ goodsIds: selectGoods.map(el => el.id) });
-              if (result.code === 1000) Navigation.navigateTo("/pages/order/index");
+              if (result.code === 1000) {
+                model.setState({ total: result.data.totalPrice });
+                Navigation.navigateTo("/pages/order/index");
+              }
             }}
           ></ShopCar>
         </PageView.Content>

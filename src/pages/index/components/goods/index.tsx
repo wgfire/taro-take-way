@@ -53,7 +53,7 @@ export const Goods = (props: GoodsProps) => {
         </Text>
 
         <Text className={styles.ellipse} color="lightGray#999999" size="24rpx">
-          {props.data.name}
+          {props.data.describe}
         </Text>
 
         <Flex justifyContent="space-between" alignItems="center" style={{ height: "60rpx" }}>
@@ -63,11 +63,11 @@ export const Goods = (props: GoodsProps) => {
             {!expand ? (
               <Animate type="slide-left" action={action}>
                 <Button
-                  style={{ padding: "0px 16rpx", height: "32rpx" }}
+                  style={{ padding: "0px 25rpx", height: "40rpx" }}
                   shape="square"
                   type="primary"
                   icon="plus"
-                  size="normal"
+                  size="large"
                   color="rgb(249, 220, 74)"
                   onClick={() => {
                     setAction("click");

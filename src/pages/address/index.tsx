@@ -22,7 +22,7 @@ export const Address = () => {
   });
 
   return (
-    <PageView loading={loading}>
+    <PageView>
       <PageView.Content flexGrow={1}>
         {model.state.address.length > 0 ? (
           model.state.address.map(el => {
@@ -60,7 +60,7 @@ export const Address = () => {
                         console.log(state, label);
                         await updateAddress({
                           ...el,
-                          isDefault: true,
+                          isDefault: state,
                         });
                         await getAddressListData();
                       }}
